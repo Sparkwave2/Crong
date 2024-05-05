@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://caravddfeqne"]
+
+[ext_resource type="Shader" path="res://crt.gdshader" id="1_1erco"]
+
+[resource]
+shader = ExtResource("1_1erco")
+shader_parameter/aberration = 0
+shader_parameter/web_compat = false

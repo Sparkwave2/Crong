@@ -1,0 +1,174 @@
+[gd_scene load_steps=11 format=3 uid="uid://k2y8xqddh408"]
+
+[ext_resource type="Script" path="res://settings.gd" id="1_6ky4r"]
+[ext_resource type="Theme" uid="uid://jo1yymi26li8" path="res://ui.tres" id="1_idj8a"]
+[ext_resource type="Texture2D" uid="uid://bhxou8m2l7g58" path="res://godotlogo.svg" id="3_8yup7"]
+[ext_resource type="Material" uid="uid://caravddfeqne" path="res://crt.tres" id="3_q50yk"]
+[ext_resource type="Script" path="res://credit_font_fixer.gd" id="3_rknc0"]
+[ext_resource type="AudioStream" uid="uid://15qqhnxq3qsb" path="res://exit.wav" id="4_on51e"]
+[ext_resource type="AudioStream" uid="uid://dmj8ftlh3yxqx" path="res://badoop.wav" id="5_tol41"]
+
+[sub_resource type="Environment" id="Environment_qp7m8"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
+glow_hdr_threshold = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_juybx"]
+font_size = 157
+font_color = Color(1.4, 1.4, 1.4, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ljy7n"]
+font_size = 26
+font_color = Color(1.4, 1.4, 1.4, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." node_paths=PackedStringArray("control_button", "fullscreen_button", "vsync_button", "aberration_button", "bloom_button", "filter", "world_environment", "select_sound", "exit_sound")]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -77.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("1_6ky4r")
+control_button = NodePath("Control Mode")
+fullscreen_button = NodePath("Fullscreen")
+vsync_button = NodePath("VSync")
+aberration_button = NodePath("Aberration")
+bloom_button = NodePath("Bloom")
+filter = NodePath("../ColorRect")
+world_environment = NodePath("../WorldEnvironment")
+select_sound = NodePath("../SelectSound")
+exit_sound = NodePath("../ExitSound")
+
+[node name="Control Mode" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_idj8a")
+theme_override_font_sizes/font_size = 26
+text = "Keyboard"
+
+[node name="Fullscreen" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_idj8a")
+theme_override_font_sizes/font_size = 26
+text = "Windowed"
+
+[node name="VSync" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_idj8a")
+theme_override_font_sizes/font_size = 26
+text = "VSync On"
+
+[node name="Aberration" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_idj8a")
+theme_override_font_sizes/font_size = 26
+text = "Weak Aberr."
+
+[node name="Bloom" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_idj8a")
+theme_override_font_sizes/font_size = 26
+text = "Bloom On"
+
+[node name="Back" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_idj8a")
+theme_override_font_sizes/font_size = 26
+text = "Back"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qp7m8")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -223.0
+offset_top = -10.0
+offset_right = 228.0
+offset_bottom = 204.0
+grow_horizontal = 2
+text = "Crong"
+label_settings = SubResource("LabelSettings_juybx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -184.0
+offset_right = 388.0
+offset_bottom = -6.0
+grow_vertical = 0
+text = "Ver Proto 0.0.1"
+label_settings = SubResource("LabelSettings_ljy7n")
+vertical_alignment = 2
+
+[node name="Credit" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -391.0
+offset_top = -184.0
+offset_right = -10.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Made with ❤️ by Sparkwave"
+label_settings = SubResource("LabelSettings_ljy7n")
+horizontal_alignment = 2
+vertical_alignment = 2
+script = ExtResource("3_rknc0")
+
+[node name="Godotlogo" type="Sprite2D" parent="."]
+position = Vector2(754, 622)
+scale = Vector2(0.047767, 0.047767)
+texture = ExtResource("3_8yup7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("3_q50yk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ExitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_on51e")
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_tol41")
+
+[connection signal="pressed" from="HBoxContainer/Control Mode" to="HBoxContainer" method="_on_control_mode_pressed"]
+[connection signal="pressed" from="HBoxContainer/Fullscreen" to="HBoxContainer" method="_on_fullscreen_pressed"]
+[connection signal="pressed" from="HBoxContainer/VSync" to="HBoxContainer" method="_on_v_sync_pressed"]
+[connection signal="pressed" from="HBoxContainer/Aberration" to="HBoxContainer" method="_on_aberration_pressed"]
+[connection signal="pressed" from="HBoxContainer/Bloom" to="HBoxContainer" method="_on_bloom_pressed"]
+[connection signal="pressed" from="HBoxContainer/Back" to="HBoxContainer" method="_on_back_pressed"]

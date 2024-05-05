@@ -1,0 +1,227 @@
+[gd_scene load_steps=27 format=3 uid="uid://bjoqm0rgwcrx2"]
+
+[ext_resource type="Script" path="res://Player Paddle.gd" id="1_fcuhb"]
+[ext_resource type="Script" path="res://Ball.gd" id="1_hv3vh"]
+[ext_resource type="Script" path="res://EnemyPaddle.gd" id="2_lo17t"]
+[ext_resource type="AudioStream" uid="uid://vqbnck64pm8k" path="res://paddle.mp3" id="4_pvoke"]
+[ext_resource type="AudioStream" uid="uid://mauh3xo4s6s4" path="res://wall.mp3" id="5_u8jqt"]
+[ext_resource type="AudioStream" uid="uid://bvtp0nhsejmas" path="res://score.mp3" id="6_xcbhb"]
+[ext_resource type="Shader" path="res://crt.gdshader" id="7_xkwx1"]
+
+[sub_resource type="Gradient" id="Gradient_1ur6l"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.675325)
+colors = PackedColorArray(5, 5, 5, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l7p6r"]
+gradient = SubResource("Gradient_1ur6l")
+use_hdr = true
+fill_to = Vector2(0, 0.05)
+repeat = 1
+metadata/_snap_enabled = true
+metadata/_snap_count = 40
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hfixf"]
+size = Vector2(14, 88)
+
+[sub_resource type="Gradient" id="Gradient_dl1py"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(2, 2, 2, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g1dfp"]
+gradient = SubResource("Gradient_dl1py")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_50gdg"]
+_data = [Vector2(0, 0.175824), 0.0, -0.37146, 0, 1, Vector2(0.473333, 0), -0.37146, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_s6nr6"]
+curve = SubResource("Curve_50gdg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vwudu"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_s6nr6")
+
+[sub_resource type="Gradient" id="Gradient_dcimm"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(2, 2, 2, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2fvfm"]
+gradient = SubResource("Gradient_dcimm")
+width = 14
+height = 88
+use_hdr = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_46e58"]
+size = Vector2(26, 26)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e22sc"]
+gradient = SubResource("Gradient_dcimm")
+width = 24
+height = 24
+use_hdr = true
+
+[sub_resource type="Gradient" id="Gradient_xhb6q"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(5, 5, 5, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_iag7s"]
+gradient = SubResource("Gradient_xhb6q")
+use_hdr = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v7r7u"]
+size = Vector2(1646, 67.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04lhf"]
+size = Vector2(82, 1096.75)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cnewr"]
+line_spacing = 3.08
+font_size = 91
+font_color = Color(1.5, 1.5, 1.5, 1)
+
+[sub_resource type="Environment" id="Environment_p3ske"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
+glow_hdr_threshold = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3op4g"]
+shader = ExtResource("7_xkwx1")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(576, 331)
+scale = Vector2(0.0625, 15.625)
+texture = SubResource("GradientTexture2D_l7p6r")
+
+[node name="Player Paddle" type="CharacterBody2D" parent="."]
+position = Vector2(34, 324)
+script = ExtResource("1_fcuhb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player Paddle"]
+shape = SubResource("RectangleShape2D_hfixf")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player Paddle"]
+scale = Vector2(0.219, 1.375)
+texture = SubResource("GradientTexture2D_g1dfp")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Player Paddle"]
+amount = 7
+process_material = SubResource("ParticleProcessMaterial_vwudu")
+texture = SubResource("GradientTexture2D_2fvfm")
+
+[node name="Ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_score", "enemy_score", "player_paddle", "enemy_paddle", "paddle_sound_player", "wall_sound_player", "score_sound_player")]
+position = Vector2(254, 328)
+motion_mode = 1
+script = ExtResource("1_hv3vh")
+player_score = NodePath("../PlayerScore")
+enemy_score = NodePath("../OpponentScore")
+player_paddle = NodePath("../Player Paddle")
+enemy_paddle = NodePath("../Enemy Paddle")
+paddle_sound_player = NodePath("../PaddleSound")
+wall_sound_player = NodePath("../WallSound")
+score_sound_player = NodePath("../ScoreSound")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("RectangleShape2D_46e58")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Ball"]
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_vwudu")
+texture = SubResource("GradientTexture2D_e22sc")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+scale = Vector2(0.406, 0.406)
+texture = SubResource("GradientTexture2D_iag7s")
+
+[node name="Enemy Paddle" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ball")]
+position = Vector2(1118, 324)
+script = ExtResource("2_lo17t")
+ball = NodePath("../Ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy Paddle"]
+shape = SubResource("RectangleShape2D_hfixf")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy Paddle"]
+scale = Vector2(0.219, 1.375)
+texture = SubResource("GradientTexture2D_g1dfp")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Enemy Paddle"]
+amount = 7
+process_material = SubResource("ParticleProcessMaterial_vwudu")
+texture = SubResource("GradientTexture2D_2fvfm")
+
+[node name="UpDownWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpDownWall"]
+position = Vector2(612, -33.75)
+shape = SubResource("RectangleShape2D_v7r7u")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="UpDownWall"]
+position = Vector2(612, 682)
+shape = SubResource("RectangleShape2D_v7r7u")
+
+[node name="PlayerWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="PlayerWall"]
+position = Vector2(-41, 324)
+shape = SubResource("RectangleShape2D_04lhf")
+
+[node name="EnemyWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="EnemyWall"]
+position = Vector2(1193, 324)
+shape = SubResource("RectangleShape2D_04lhf")
+
+[node name="OpponentScore" type="Label" parent="."]
+offset_left = 585.0
+offset_top = 8.0
+offset_right = 706.0
+offset_bottom = 136.0
+text = "0"
+label_settings = SubResource("LabelSettings_cnewr")
+
+[node name="PlayerScore" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 445.0
+offset_top = 8.0
+offset_right = 566.0
+offset_bottom = 136.0
+grow_horizontal = 0
+text = "0"
+label_settings = SubResource("LabelSettings_cnewr")
+horizontal_alignment = 2
+
+[node name="PaddleSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_pvoke")
+
+[node name="WallSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_u8jqt")
+
+[node name="ScoreSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_xcbhb")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p3ske")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1158.0
+offset_bottom = 653.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+material = SubResource("ShaderMaterial_3op4g")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

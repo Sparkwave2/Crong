@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://bjoqm0rgwcrx2"]
+
+[ext_resource type="Script" path="res://Ball.gd" id="1_hv3vh"]
+[ext_resource type="Script" path="res://EnemyPaddle.gd" id="2_lo17t"]
+
+[sub_resource type="Gradient" id="Gradient_mh2nw"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_01cp8"]
+gradient = SubResource("Gradient_mh2nw")
+
+[sub_resource type="Gradient" id="Gradient_1ur6l"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.683871)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l7p6r"]
+gradient = SubResource("Gradient_1ur6l")
+fill_to = Vector2(0, 0.05)
+repeat = 1
+metadata/_snap_enabled = true
+metadata/_snap_count = 40
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hfixf"]
+size = Vector2(14, 88)
+
+[sub_resource type="Gradient" id="Gradient_dl1py"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g1dfp"]
+gradient = SubResource("Gradient_dl1py")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_46e58"]
+size = Vector2(26, 26)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(576, 338)
+scale = Vector2(27.8287, 27.8287)
+texture = SubResource("GradientTexture2D_01cp8")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(576, 331)
+scale = Vector2(0.0625, 15.625)
+texture = SubResource("GradientTexture2D_l7p6r")
+
+[node name="Player Paddle" type="CharacterBody2D" parent="."]
+position = Vector2(34, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player Paddle"]
+shape = SubResource("RectangleShape2D_hfixf")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player Paddle"]
+scale = Vector2(0.219, 1.375)
+texture = SubResource("GradientTexture2D_g1dfp")
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(254, 328)
+motion_mode = 1
+script = ExtResource("1_hv3vh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("RectangleShape2D_46e58")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+scale = Vector2(0.406, 0.406)
+texture = SubResource("GradientTexture2D_g1dfp")
+
+[node name="Enemy Paddle" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ball")]
+position = Vector2(1118, 324)
+script = ExtResource("2_lo17t")
+ball = NodePath("../Ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy Paddle"]
+shape = SubResource("RectangleShape2D_hfixf")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy Paddle"]
+scale = Vector2(0.219, 1.375)
+texture = SubResource("GradientTexture2D_g1dfp")

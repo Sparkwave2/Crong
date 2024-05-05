@@ -1,0 +1,10 @@
+res://settings.tscn
+res://crt.gdshader
+res://crt.tres
+res://ui.tres
+res://main.tscn
+res://menu.tscn
+res://menu.gd
+res://settings.gd
+res://in_game_ui.gd
+res://credit_font_fixer.gd
