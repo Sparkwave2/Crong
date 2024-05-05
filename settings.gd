@@ -34,24 +34,24 @@ func update_text():
 			control_button.text = "Keyboard Only"
 		1:
 			if DisplayServer.is_touchscreen_available():
-				control_button.text = "Mouse/Touch"
+				control_button.text = "Mouse/Touch~"
 			else:
-				control_button.text = "Mouse"
+				control_button.text = "Rat"
 		2:
 			control_button.text = "Controller"
 			
 	if OS.get_name() == "Web":
-		fullscreen_button.text = "Go Fullscreen"
+		fullscreen_button.text = "Fully screen"
 	else:
 		match Autoload.fullscreen:
 			0:
-				fullscreen_button.text = "Windowed"
+				fullscreen_button.text = "Boxed"
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 			1:
-				fullscreen_button.text = "Borderless"
+				fullscreen_button.text = "Less borders"
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			2:
-				fullscreen_button.text = "Fullscreen"
+				fullscreen_button.text = "Fully screen"
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 			
 			
@@ -68,13 +68,13 @@ func update_text():
 			
 	match Autoload.aberration:
 		0:
-			aberration_button.text = "No Aberr."
+			aberration_button.text = "No Aberrrrrrrrrrr."
 			Autoload.crt_material.set_shader_parameter("aberration", 0)
 		1:
-			aberration_button.text = "Weak Aberr."
+			aberration_button.text = "Normal Aberr."
 			Autoload.crt_material.set_shader_parameter("aberration", 1)
 		2:
-			aberration_button.text = "Strong Aberr."
+			aberration_button.text = "POWERFUL Aberr."
 			Autoload.crt_material.set_shader_parameter("aberration", 2)
 	
 	if ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility":
