@@ -41,7 +41,7 @@ func update_text():
 			control_button.text = "Controller"
 			
 	if OS.get_name() == "Web":
-		fullscreen_button.text = "Go Fullscreen"
+		fullscreen_button.text = "Fullscreen"
 	else:
 		match Autoload.fullscreen:
 			0:
@@ -74,7 +74,7 @@ func update_text():
 			aberration_button.text = "Weak Aberr."
 			Autoload.crt_material.set_shader_parameter("aberration", 1)
 		2:
-			aberration_button.text = "Strong Aberr."
+			aberration_button.text = "Silly Aberr."
 			Autoload.crt_material.set_shader_parameter("aberration", 2)
 	
 	if ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility":
