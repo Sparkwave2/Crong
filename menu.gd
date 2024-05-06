@@ -1,4 +1,6 @@
-extends HBoxContainer
+extends VBoxContainer
+
+@export var list_of_buttons: Array[Button]
 
 @export var difficulty_button: Button
 @export var exit_button: Button
@@ -22,6 +24,12 @@ func _ready():
 			difficulty_button.text = "Medium"
 		2:
 			difficulty_button.text = "Hard"
+			
+	if Autoload.mobile_layout:
+		for button in list_of_buttons:
+			button.add_theme_font_size_override("font_size", 60)
+			
+	get_tree().set_auto_accept_quit(true)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

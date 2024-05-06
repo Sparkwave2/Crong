@@ -1,12 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://k2y8xqddh408"]
+[gd_scene load_steps=14 format=3 uid="uid://k2y8xqddh408"]
 
 [ext_resource type="Script" path="res://settings.gd" id="1_6ky4r"]
 [ext_resource type="Theme" uid="uid://jo1yymi26li8" path="res://ui.tres" id="1_idj8a"]
 [ext_resource type="Texture2D" uid="uid://bhxou8m2l7g58" path="res://godotlogo.svg" id="3_8yup7"]
+[ext_resource type="Script" path="res://auto_version_text.gd" id="3_gj4y0"]
 [ext_resource type="Material" uid="uid://caravddfeqne" path="res://crt.tres" id="3_q50yk"]
 [ext_resource type="Script" path="res://credit_font_fixer.gd" id="3_rknc0"]
 [ext_resource type="AudioStream" uid="uid://15qqhnxq3qsb" path="res://exit.wav" id="4_on51e"]
 [ext_resource type="AudioStream" uid="uid://dmj8ftlh3yxqx" path="res://badoop.wav" id="5_tol41"]
+[ext_resource type="Texture2D" uid="uid://lny5dypoqcu2" path="res://tic80logo.svg" id="6_a33ni"]
+[ext_resource type="AudioStream" uid="uid://ckk6et5w8v2ha" path="res://blip.wav" id="10_fdyll"]
 
 [sub_resource type="Environment" id="Environment_qp7m8"]
 background_mode = 3
@@ -30,27 +33,34 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." node_paths=PackedStringArray("control_button", "fullscreen_button", "vsync_button", "aberration_button", "bloom_button", "filter", "world_environment", "select_sound", "exit_sound")]
+[node name="HBoxContainer" type="VBoxContainer" parent="." node_paths=PackedStringArray("list_of_buttons", "control_button", "fullscreen_button", "vsync_button", "aberration_button", "bloom_button", "trails_button", "volume_slider", "volume_label", "filter", "world_environment", "select_sound", "exit_sound", "sound_preview")]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -77.0
-offset_bottom = 43.0
+offset_left = 348.0
+offset_top = -59.0
+offset_right = -348.0
+offset_bottom = 177.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 script = ExtResource("1_6ky4r")
+list_of_buttons = [NodePath("Control Mode"), NodePath("Aberration"), NodePath("Bloom"), NodePath("Trails"), NodePath("Back")]
 control_button = NodePath("Control Mode")
 fullscreen_button = NodePath("Fullscreen")
 vsync_button = NodePath("VSync")
 aberration_button = NodePath("Aberration")
 bloom_button = NodePath("Bloom")
+trails_button = NodePath("Trails")
+volume_slider = NodePath("Volume Slider")
+volume_label = NodePath("Volume Label")
 filter = NodePath("../ColorRect")
 world_environment = NodePath("../WorldEnvironment")
 select_sound = NodePath("../SelectSound")
 exit_sound = NodePath("../ExitSound")
+sound_preview = NodePath("../SoundPreview")
 
 [node name="Control Mode" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -87,6 +97,24 @@ theme = ExtResource("1_idj8a")
 theme_override_font_sizes/font_size = 26
 text = "Bloom On"
 
+[node name="Trails" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_idj8a")
+theme_override_font_sizes/font_size = 26
+text = "Trails On"
+
+[node name="Volume Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Volume: 100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Volume Slider" type="HSlider" parent="HBoxContainer"]
+layout_mode = 2
+step = 5.0
+value = 100.0
+
 [node name="Back" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -122,9 +150,10 @@ offset_top = -184.0
 offset_right = 388.0
 offset_bottom = -6.0
 grow_vertical = 0
-text = "Ver Proto 0.0.1"
+text = "Ver Alpha 0.0.2"
 label_settings = SubResource("LabelSettings_ljy7n")
 vertical_alignment = 2
+script = ExtResource("3_gj4y0")
 
 [node name="Credit" type="Label" parent="."]
 layout_mode = 1
@@ -139,16 +168,22 @@ offset_right = -10.0
 offset_bottom = -6.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "Made with ❤️ by Sparkwave"
+text = "Made with ❤️ by Sparkwave
+SFX made using TIC-80"
 label_settings = SubResource("LabelSettings_ljy7n")
 horizontal_alignment = 2
 vertical_alignment = 2
 script = ExtResource("3_rknc0")
 
 [node name="Godotlogo" type="Sprite2D" parent="."]
-position = Vector2(754, 622)
-scale = Vector2(0.047767, 0.047767)
+position = Vector2(675, 608)
+scale = Vector2(0.0608111, 0.0608111)
 texture = ExtResource("3_8yup7")
+
+[node name="Tic80Logo" type="Sprite2D" parent="."]
+position = Vector2(744, 608)
+scale = Vector2(0.32304, 0.32304)
+texture = ExtResource("6_a33ni")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = ExtResource("3_q50yk")
@@ -166,9 +201,16 @@ stream = ExtResource("4_on51e")
 [node name="SelectSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_tol41")
 
+[node name="SoundPreview" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_fdyll")
+max_polyphony = 3
+
 [connection signal="pressed" from="HBoxContainer/Control Mode" to="HBoxContainer" method="_on_control_mode_pressed"]
 [connection signal="pressed" from="HBoxContainer/Fullscreen" to="HBoxContainer" method="_on_fullscreen_pressed"]
 [connection signal="pressed" from="HBoxContainer/VSync" to="HBoxContainer" method="_on_v_sync_pressed"]
 [connection signal="pressed" from="HBoxContainer/Aberration" to="HBoxContainer" method="_on_aberration_pressed"]
 [connection signal="pressed" from="HBoxContainer/Bloom" to="HBoxContainer" method="_on_bloom_pressed"]
+[connection signal="pressed" from="HBoxContainer/Trails" to="HBoxContainer" method="_on_trails_pressed"]
+[connection signal="drag_ended" from="HBoxContainer/Volume Slider" to="HBoxContainer" method="_on_volume_slider_drag_ended"]
+[connection signal="value_changed" from="HBoxContainer/Volume Slider" to="HBoxContainer" method="_on_volume_slider_value_changed"]
 [connection signal="pressed" from="HBoxContainer/Back" to="HBoxContainer" method="_on_back_pressed"]

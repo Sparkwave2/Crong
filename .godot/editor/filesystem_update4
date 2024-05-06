@@ -1,10 +1,14 @@
 res://settings.tscn
 res://crt.gdshader
-res://crt.tres
 res://ui.tres
-res://main.tscn
 res://menu.tscn
-res://menu.gd
 res://settings.gd
+res://autoload.gd
+res://main.tscn
+res://Player Paddle.gd
+res://auto_version_text.gd
+res://menu.gd
+res://audio_buses.tres
 res://in_game_ui.gd
-res://credit_font_fixer.gd
+res://blur.gdshader
+res://pause_screen.gd

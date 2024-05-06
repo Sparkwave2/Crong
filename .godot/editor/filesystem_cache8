@@ -1,70 +1,50 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1714867843
-autoload.gd::GDScript::-1::1714864564::0::1::::<>Node<>::
+::res://::1714959250
+autoload.gd::GDScript::-1::1714959097::0::1::::<>Node<>::
 badoop.wav::AudioStreamWAV::8022121179545984691::1714846186::1714846186::1::::<><>::
 Ball.gd::GDScript::-1::1714861092::0::1::::Ball<>CharacterBody2D<>::
+blip.wav::AudioStreamWAV::5497263996590824146::1714949983::1714949983::1::::<><>::
 bloom_enabler.gd::GDScript::-1::1714846927::0::1::::<>WorldEnvironment<>::
 boing.wav::AudioStreamWAV::6990744849884465801::1714845268::1714845268::1::::<><>::
-crt.gdshader::Shader::-1::1714865571::0::1::::<><>::
+credit_font_fixer.gd::GDScript::-1::1714865551::0::1::::<>Label<>::
+crt.gdshader::Shader::-1::1714959100::0::1::::<><>::
 crt.tres::ShaderMaterial::141410983921025038::1714864620::0::1::::<><>::res://crt.gdshader
 EnemyPaddle.gd::GDScript::-1::1714816177::0::1::::<>CharacterBody2D<>::
 exit.wav::AudioStreamWAV::1887841700610801189::1714846186::1714846186::1::::<><>::
-export_presets.cfg::TextFile::-1::1714863328::0::1::::<><>::
+export_presets.cfg::TextFile::-1::1714867843::0::1::::<><>::
 godotlogo.svg::CompressedTexture2D::2926110784330460613::1714862678::1714862678::1::::<><>::
 hidebloom.gd::GDScript::-1::1714864044::0::1::::<>Button<>::
 icon.svg::CompressedTexture2D::7925229930952503320::1714691844::1714691852::1::::<><>::
-in_game_ui.gd::GDScript::-1::1714865467::0::1::::<>Node2D<>::
-main.tscn::PackedScene::3048015806050891229::1714865571::0::1::::<><>::res://Player Paddle.gd<>res://Ball.gd<>res://in_game_ui.gd<>res://EnemyPaddle.gd<>uid://c6umstspcgfu4::::res://boing.wav<>uid://ddd4bsc1yxg12::::res://wall.wav<>uid://nhwaue7tmgt6::::res://whoops.wav<>uid://caravddfeqne::::res://crt.tres<>res://bloom_enabler.gd
-menu.gd::GDScript::-1::1714864947::0::1::::<>HBoxContainer<>::
-menu.tscn::PackedScene::1809411675766065202::1714865571::0::1::::<><>::res://menu.gd<>uid://jo1yymi26li8::::res://ui.tres<>uid://caravddfeqne::::res://crt.tres<>res://bloom_enabler.gd<>uid://bhxou8m2l7g58::::res://godotlogo.svg<>uid://15qqhnxq3qsb::::res://exit.wav<>res://credit_font_fixer.gd<>uid://dmj8ftlh3yxqx::::res://badoop.wav
-Player Paddle.gd::GDScript::-1::1714862519::0::1::::<>CharacterBody2D<>::
-credit_font_fixer.gd::GDScript::-1::1714865551::0::1::::<>Label<>::
-settings.gd::GDScript::-1::1714865399::0::1::::<>HBoxContainer<>::
-settings.tscn::PackedScene::759144007659743279::1714865571::0::1::::<><>::res://settings.gd<>uid://jo1yymi26li8::::res://ui.tres<>uid://bhxou8m2l7g58::::res://godotlogo.svg<>uid://caravddfeqne::::res://crt.tres<>res://credit_font_fixer.gd<>uid://15qqhnxq3qsb::::res://exit.wav<>uid://dmj8ftlh3yxqx::::res://badoop.wav
-ui.tres::Theme::662223661663626245::1714864620::0::1::::<><>::
+in_game_ui.gd::GDScript::-1::1714958113::0::1::::InGameUI<>Node2D<>::
+main.tscn::PackedScene::3048015806050891229::1714959099::0::1::::<><>::res://Player Paddle.gd<>res://Ball.gd<>res://in_game_ui.gd<>res://EnemyPaddle.gd<>uid://c6umstspcgfu4::::res://boing.wav<>uid://ddd4bsc1yxg12::::res://wall.wav<>uid://nhwaue7tmgt6::::res://whoops.wav<>uid://caravddfeqne::::res://crt.tres<>res://bloom_enabler.gd<>uid://cfqf3ed56hexw::::res://pause.wav<>uid://jo1yymi26li8::::res://ui.tres<>res://pause_screen.gd<>uid://mlt1na6skii3::::res://pausefilled.png
+menu.gd::GDScript::-1::1714959007::0::1::::<>VBoxContainer<>::
+menu.tscn::PackedScene::1809411675766065202::1714959099::0::1::::<><>::res://menu.gd<>uid://jo1yymi26li8::::res://ui.tres<>uid://caravddfeqne::::res://crt.tres<>res://bloom_enabler.gd<>uid://bhxou8m2l7g58::::res://godotlogo.svg<>uid://15qqhnxq3qsb::::res://exit.wav<>res://auto_version_text.gd<>res://credit_font_fixer.gd<>uid://dmj8ftlh3yxqx::::res://badoop.wav<>uid://lny5dypoqcu2::::res://tic80logo.svg
+pause.png::CompressedTexture2D::3939212153474163935::1714957857::1714957857::1::::<><>::
+pause.wav::AudioStreamWAV::5157169432967073372::1714954538::1714954538::1::::<><>::
+pausefilled.png::CompressedTexture2D::866175016691642908::1714957984::1714957984::1::::<><>::
+Player Paddle.gd::GDScript::-1::1714958334::0::1::::<>CharacterBody2D<>::
+auto_version_text.gd::GDScript::-1::1714948824::0::1::::<>Label<>::
+audio_buses.tres::AudioBusLayout::4267026975938077971::1714949832::0::1::::<><>::
+blur.gdshader::Shader::-1::1714959100::0::1::::<><>::
+pause_screen.gd::GDScript::-1::1714955248::0::1::::PauseScreen<>ColorRect<>::
+settings.gd::GDScript::-1::1714959002::0::1::::<>VBoxContainer<>::
+settings.tscn::PackedScene::759144007659743279::1714959100::0::1::::<><>::res://settings.gd<>uid://jo1yymi26li8::::res://ui.tres<>uid://bhxou8m2l7g58::::res://godotlogo.svg<>res://auto_version_text.gd<>uid://caravddfeqne::::res://crt.tres<>res://credit_font_fixer.gd<>uid://15qqhnxq3qsb::::res://exit.wav<>uid://dmj8ftlh3yxqx::::res://badoop.wav<>uid://lny5dypoqcu2::::res://tic80logo.svg<>uid://ckk6et5w8v2ha::::res://blip.wav
+tic80logo.svg::CompressedTexture2D::800425167810903691::1714949017::1714949106::1::::<><>::
+ui.tres::Theme::662223661663626245::1714946330::0::1::::<><>::
 wall.wav::AudioStreamWAV::7377785243563928351::1714845566::1714845566::1::::<><>::
 whoops.wav::AudioStreamWAV::928242443539725389::1714845873::1714845873::1::::<><>::
-::res://builds/::1714867652
-::res://builds/Linux X11/::1714867638
+::res://builds/::1714927650
+::res://builds/Android/::1714959248
+::res://builds/Linux X11/::1714959197
 appimage_command.txt::TextFile::-1::1714867549::0::1::::<><>::
 icon.png::CompressedTexture2D::8798033319048575941::1714866861::1714867638::1::::<><>::
-::res://builds/Linux X11/AppDir/::1714867485
-crong.x86_64.png::::-1::0::0::0::::<><>::
-::res://builds/Linux X11/AppDir/usr/::1714866424
-::res://builds/Linux X11/AppDir/usr/bin/::1714866425
-::res://builds/Linux X11/AppDir/usr/lib/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/applications/::1714866599
-::res://builds/Linux X11/AppDir/usr/share/icons/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/::1714866687
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/16x16/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/16x16/apps/::1714867638
-icon.png::CompressedTexture2D::1093523206931131768::1714866966::1714867638::1::::<><>::
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/32x32/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/32x32/apps/::1714867638
-icon.png::CompressedTexture2D::2944503886109353932::1714866950::1714867638::1::::<><>::
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/64x64/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/64x64/apps/::1714867638
-icon.png::CompressedTexture2D::6124677678334131152::1714866933::1714867638::1::::<><>::
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/128x128/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/128x128/apps/::1714867638
-icon.png::CompressedTexture2D::2979666335645546242::1714866916::1714867638::1::::<><>::
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/256x256/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/256x256/apps/::1714867638
-crong.x86_64.png::CompressedTexture2D::1879530328531700508::1714866863::1714867638::1::::<><>::
-icon.png::CompressedTexture2D::8076162934788061312::1714867484::1714867638::1::::<><>::
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/480x480/::1714866687
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/480x480/apps/::1714867638
-icon.png::CompressedTexture2D::8902217264072605142::1714866687::1714867638::1::::<><>::
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/scalable/::1714866424
-::res://builds/Linux X11/AppDir/usr/share/icons/hicolor/scalable/apps/::1714866424
-::res://builds/macOS/::1714867736
-::res://builds/ProgWebApp/::1714906213
-index.144x144.png::CompressedTexture2D::4188459970997968272::1714867842::1714906213::1::::<><>::
-index.180x180.png::CompressedTexture2D::6137350168164103568::1714867842::1714906213::1::::<><>::
-index.512x512.png::CompressedTexture2D::5594341263482205751::1714867842::1714906213::1::::<><>::
-index.apple-touch-icon.png::CompressedTexture2D::2207390995967449380::1714867842::1714906213::1::::<><>::
-index.icon.png::CompressedTexture2D::3718348454843813087::1714867842::1714906213::1::::<><>::
-index.manifest.json::JSON::-1::1714867842::0::1::::<><>::
-index.png::CompressedTexture2D::1131919583670180297::1714867842::1714906213::1::::<><>::
-::res://builds/Windows/::1714865653
+::res://builds/macOS/::1714959208
+::res://builds/ProgWebApp/::1714959189
+index.144x144.png::CompressedTexture2D::2138555048138715145::1714959189::1714959250::1::::<><>::
+index.180x180.png::CompressedTexture2D::4030662437232889216::1714959189::1714959250::1::::<><>::
+index.512x512.png::CompressedTexture2D::3491198058091878666::1714959189::1714959250::1::::<><>::
+index.apple-touch-icon.png::CompressedTexture2D::4794545634263973611::1714959189::1714959250::1::::<><>::
+index.icon.png::CompressedTexture2D::2569696626689163351::1714959189::1714959250::1::::<><>::
+index.manifest.json::JSON::-1::1714959189::0::1::::<><>::
+index.png::CompressedTexture2D::6707633418135586780::1714959189::1714959250::1::::<><>::
+::res://builds/Windows/::1714959180

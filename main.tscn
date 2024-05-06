@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bjoqm0rgwcrx2"]
+[gd_scene load_steps=33 format=3 uid="uid://bjoqm0rgwcrx2"]
 
 [ext_resource type="Script" path="res://Player Paddle.gd" id="1_fcuhb"]
 [ext_resource type="Script" path="res://Ball.gd" id="1_hv3vh"]
@@ -9,6 +9,10 @@
 [ext_resource type="AudioStream" uid="uid://nhwaue7tmgt6" path="res://whoops.wav" id="6_qj5jl"]
 [ext_resource type="Material" uid="uid://caravddfeqne" path="res://crt.tres" id="7_uqwj0"]
 [ext_resource type="Script" path="res://bloom_enabler.gd" id="7_wotgp"]
+[ext_resource type="AudioStream" uid="uid://cfqf3ed56hexw" path="res://pause.wav" id="8_jlp4q"]
+[ext_resource type="Theme" uid="uid://jo1yymi26li8" path="res://ui.tres" id="9_bncvu"]
+[ext_resource type="Script" path="res://pause_screen.gd" id="9_vnqyr"]
+[ext_resource type="Texture2D" uid="uid://mlt1na6skii3" path="res://pausefilled.png" id="10_othg6"]
 
 [sub_resource type="Gradient" id="Gradient_1ur6l"]
 interpolation_mode = 1
@@ -93,9 +97,14 @@ glow_hdr_threshold = 0.0
 [sub_resource type="LabelSettings" id="LabelSettings_rv611"]
 font_size = 41
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("hold_to_exit_text")]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("hold_to_exit_text", "trails", "pause_screen", "pause_sound", "mobile_pause_button")]
+process_mode = 1
 script = ExtResource("1_ia1si")
 hold_to_exit_text = NodePath("Control/HoldToExit")
+trails = [NodePath("Player Paddle/GPUParticles2D2"), NodePath("Ball/GPUParticles2D"), NodePath("Enemy Paddle/GPUParticles2D2")]
+pause_screen = NodePath("Control/PauseScreen")
+pause_sound = NodePath("PauseSound")
+mobile_pause_button = NodePath("Control/Pause Button")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 position = Vector2(576, 331)
@@ -103,6 +112,7 @@ scale = Vector2(0.0625, 15.625)
 texture = SubResource("GradientTexture2D_l7p6r")
 
 [node name="Player Paddle" type="CharacterBody2D" parent="."]
+process_mode = 1
 position = Vector2(34, 324)
 script = ExtResource("1_fcuhb")
 
@@ -119,6 +129,7 @@ process_material = SubResource("ParticleProcessMaterial_vwudu")
 texture = SubResource("GradientTexture2D_2fvfm")
 
 [node name="Ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_score", "enemy_score", "player_paddle", "enemy_paddle", "paddle_sound_player", "wall_sound_player", "score_sound_player")]
+process_mode = 1
 position = Vector2(254, 328)
 motion_mode = 1
 script = ExtResource("1_hv3vh")
@@ -143,6 +154,7 @@ scale = Vector2(0.406, 0.406)
 texture = SubResource("GradientTexture2D_iag7s")
 
 [node name="Enemy Paddle" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ball")]
+process_mode = 1
 position = Vector2(1118, 324)
 script = ExtResource("2_lo17t")
 ball = NodePath("../Ball")
@@ -211,6 +223,10 @@ stream = ExtResource("5_fg065")
 [node name="ScoreSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_qj5jl")
 
+[node name="PauseSound" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("8_jlp4q")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p3ske")
 script = ExtResource("7_wotgp")
@@ -231,6 +247,81 @@ offset_bottom = 64.0
 text = "Hold to exit"
 label_settings = SubResource("LabelSettings_rv611")
 
+[node name="Pause Button" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = 230.5
+offset_right = 477.0
+offset_bottom = 750.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.153847, 0.153847)
+icon = ExtResource("10_othg6")
+icon_alignment = 1
+
+[node name="PauseScreen" type="ColorRect" parent="Control" node_paths=PackedStringArray("pause_sound", "in_game_ui")]
+process_mode = 2
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.266667, 0.266667, 0.266667, 0.980392)
+script = ExtResource("9_vnqyr")
+pause_sound = NodePath("../../PauseSound")
+in_game_ui = NodePath("../..")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PauseScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = -64.5
+offset_right = 106.0
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Continue" type="Button" parent="Control/PauseScreen/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("9_bncvu")
+theme_override_font_sizes/font_size = 31
+text = "Continue"
+
+[node name="Quit" type="Button" parent="Control/PauseScreen/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("9_bncvu")
+theme_override_font_sizes/font_size = 31
+text = "Quit
+"
+
+[node name="Label" type="Label" parent="Control/PauseScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -235.0
+offset_top = -194.5
+offset_right = 235.0
+offset_bottom = -97.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 71
+text = "Game Paused"
+horizontal_alignment = 1
+
 [node name="ColorRect" type="ColorRect" parent="Control"]
 material = ExtResource("7_uqwj0")
 layout_mode = 1
@@ -242,3 +333,7 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[connection signal="pressed" from="Control/Pause Button" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="Control/PauseScreen/VBoxContainer/Continue" to="Control/PauseScreen" method="_on_continue_pressed"]
+[connection signal="pressed" from="Control/PauseScreen/VBoxContainer/Quit" to="Control/PauseScreen" method="_on_quit_pressed"]

@@ -1,10 +1,17 @@
-extends HBoxContainer
+extends VBoxContainer
+
+@export var list_of_buttons: Array[Button]
 
 @export var control_button: Button
 @export var fullscreen_button: Button
 @export var vsync_button: Button
 @export var aberration_button: Button
 @export var bloom_button: Button
+@export var trails_button: Button
+
+@export var volume_slider: Slider
+@export var volume_label: Label
+var temp_volume: int
 
 @export var filter: ColorRect
 
@@ -12,6 +19,9 @@ extends HBoxContainer
 
 @export var select_sound: AudioStreamPlayer
 @export var exit_sound: AudioStreamPlayer
+@export var sound_preview: AudioStreamPlayer
+
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -20,8 +30,16 @@ func _ready():
 		bloom_button.queue_free()
 	if OS.get_name() == "Web":
 		vsync_button.queue_free()
+	if Autoload.mobile_layout:
+		vsync_button.queue_free()
+		fullscreen_button.queue_free()
+		get_tree().set_auto_accept_quit(false)
+		for button in list_of_buttons:
+			button.add_theme_font_size_override("font_size", 40)
+		volume_label.add_theme_font_size_override("font_size", 30)
 	select_sound.play()
 	update_text()
+	update_sliders()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,9 +57,15 @@ func update_text():
 				control_button.text = "Mouse"
 		2:
 			control_button.text = "Controller"
+		3:
+			control_button.text = "Touch"
+		4:
+			control_button.text = "Accelerometer"
 			
 	if OS.get_name() == "Web":
 		fullscreen_button.text = "Go Fullscreen"
+	elif Autoload.mobile_layout:
+		pass
 	else:
 		match Autoload.fullscreen:
 			0:
@@ -76,6 +100,12 @@ func update_text():
 		2:
 			aberration_button.text = "Strong Aberr."
 			Autoload.crt_material.set_shader_parameter("aberration", 2)
+			
+	match Autoload.trails:
+		0:
+			trails_button.text = "Trails Off"
+		1:
+			trails_button.text = "Trails On"
 	
 	if ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility":
 		return
@@ -88,16 +118,30 @@ func update_text():
 			bloom_button.text = "Bloom On"
 			world_environment.environment.glow_enabled = true
 
+func update_sliders():
+	volume_slider.value = Autoload.audio_volume_displayed
+	volume_label.text = "Volume: " + str(volume_slider.value) + "%"
+
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://menu.tscn")
+	
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and Autoload.mobile_layout:
+		get_tree().change_scene_to_file("res://menu.tscn")
 
 
 func _on_control_mode_pressed():
 	select_sound.play()
-	Autoload.control_mode += 1
-	if Autoload.control_mode > 2:
-		Autoload.control_mode = 0
+	if Autoload.mobile_layout:
+		Autoload.control_mode += 1
+		if Autoload.control_mode > 4:
+			Autoload.control_mode = 3
+	else:
+		Autoload.control_mode += 1
+		if Autoload.control_mode > 2:
+			Autoload.control_mode = 0
+	
 	update_text()
 
 
@@ -134,3 +178,23 @@ func _on_bloom_pressed():
 	if Autoload.bloom > 1:
 		Autoload.bloom = 0
 	update_text()
+	
+func _on_trails_pressed():
+	select_sound.play()
+	Autoload.trails += 1
+	if Autoload.trails > 1:
+		Autoload.trails = 0
+	update_text()
+
+
+
+func _on_volume_slider_value_changed(value):
+	sound_preview.play()
+	var int_to_db = (20 * log(value)) - 92.10340371976184
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), int_to_db)
+	# print(str(value) + ", " + str(int_to_db))
+	volume_label.text = "Volume: " + str(value) + "%"
+	temp_volume = value
+	
+func _on_volume_slider_drag_ended(value_changed):
+	Autoload.audio_volume_displayed = temp_volume
