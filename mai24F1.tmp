@@ -1,11 +1,10 @@
-[gd_scene load_steps=55 format=3 uid="uid://bjoqm0rgwcrx2"]
+[gd_scene load_steps=35 format=3 uid="uid://bjoqm0rgwcrx2"]
 
 [ext_resource type="Script" path="res://Player Paddle.gd" id="1_fcuhb"]
 [ext_resource type="Script" path="res://Ball.gd" id="1_hv3vh"]
 [ext_resource type="Script" path="res://in_game_ui.gd" id="1_ia1si"]
 [ext_resource type="Script" path="res://EnemyPaddle.gd" id="2_lo17t"]
 [ext_resource type="AudioStream" uid="uid://c6umstspcgfu4" path="res://boing.wav" id="4_f7wqr"]
-[ext_resource type="Texture2D" uid="uid://bmwvkhhunqn1c" path="res://circle.svg" id="4_veauk"]
 [ext_resource type="AudioStream" uid="uid://ddd4bsc1yxg12" path="res://wall.wav" id="5_fg065"]
 [ext_resource type="AudioStream" uid="uid://nhwaue7tmgt6" path="res://whoops.wav" id="6_qj5jl"]
 [ext_resource type="Material" uid="uid://caravddfeqne" path="res://crt.tres" id="7_uqwj0"]
@@ -14,7 +13,6 @@
 [ext_resource type="Theme" uid="uid://jo1yymi26li8" path="res://ui.tres" id="9_bncvu"]
 [ext_resource type="Script" path="res://pause_screen.gd" id="9_vnqyr"]
 [ext_resource type="Texture2D" uid="uid://mlt1na6skii3" path="res://pausefilled.png" id="10_othg6"]
-[ext_resource type="Script" path="res://controls_displayer.gd" id="11_dxc4w"]
 
 [sub_resource type="Gradient" id="Gradient_1ur6l"]
 interpolation_mode = 1
@@ -32,6 +30,14 @@ metadata/_snap_count = 40
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hfixf"]
 size = Vector2(14, 88)
 
+[sub_resource type="Gradient" id="Gradient_dl1py"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(2, 2, 2, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g1dfp"]
+gradient = SubResource("Gradient_dl1py")
+use_hdr = true
+
 [sub_resource type="Curve" id="Curve_50gdg"]
 _data = [Vector2(0, 0.175824), 0.0, -0.37146, 0, 1, Vector2(0.473333, 0), -0.37146, 0.0, 1, 0]
 point_count = 2
@@ -44,83 +50,21 @@ particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
 alpha_curve = SubResource("CurveTexture_s6nr6")
 
-[sub_resource type="Gradient" id="Gradient_0du0c"]
+[sub_resource type="Gradient" id="Gradient_dcimm"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0, 1, 0, 1)
+colors = PackedColorArray(2, 2, 2, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_a5umd"]
-gradient = SubResource("Gradient_0du0c")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2fvfm"]
+gradient = SubResource("Gradient_dcimm")
 width = 14
 height = 88
 use_hdr = true
 
-[sub_resource type="Gradient" id="Gradient_75n6d"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0, 1, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_lhoxt"]
-gradient = SubResource("Gradient_75n6d")
-use_hdr = true
-
-[sub_resource type="Curve" id="Curve_thajj"]
-max_value = 100.0
-_data = [Vector2(0, 0), 0.0, 100.0, 0, 1, Vector2(1, 100), 100.0, 0.0, 1, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_4bec1"]
-curve = SubResource("Curve_thajj")
-
-[sub_resource type="Curve" id="Curve_g48wx"]
-_data = [Vector2(0, 1), 0.0, 1.4, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_oykcd"]
-curve = SubResource("Curve_g48wx")
-
-[sub_resource type="Curve" id="Curve_tbpfw"]
-max_value = 3.0
-_data = [Vector2(0, 0), 0.0, 3.0, 0, 1, Vector2(1, 3), 3.0, 0.0, 1, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_mnvrc"]
-curve = SubResource("Curve_tbpfw")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x1nt8"]
-particle_flag_disable_z = true
-initial_velocity_min = 413.04
-initial_velocity_max = 695.65
-gravity = Vector3(0, 0, 0)
-damping_max = 100.0
-damping_curve = SubResource("CurveTexture_4bec1")
-scale_curve = SubResource("CurveTexture_oykcd")
-scale_over_velocity_max = 673.91
-scale_over_velocity_curve = SubResource("CurveTexture_mnvrc")
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_46e58"]
 size = Vector2(26, 26)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kcub8"]
-particle_flag_disable_z = true
-initial_velocity_min = 163.04
-initial_velocity_max = 326.08
-gravity = Vector3(0, 0, 0)
-damping_max = 100.0
-damping_curve = SubResource("CurveTexture_4bec1")
-scale_curve = SubResource("CurveTexture_oykcd")
-scale_over_velocity_max = 673.91
-scale_over_velocity_curve = SubResource("CurveTexture_mnvrc")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kj565"]
-particle_flag_disable_z = true
-gravity = Vector3(0, 0, 0)
-alpha_curve = SubResource("CurveTexture_s6nr6")
-
-[sub_resource type="Gradient" id="Gradient_7r4l5"]
-offsets = PackedFloat32Array(0.975)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_wlpf4"]
-gradient = SubResource("Gradient_7r4l5")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e22sc"]
+gradient = SubResource("Gradient_dcimm")
 width = 24
 height = 24
 use_hdr = true
@@ -141,42 +85,8 @@ colors = PackedColorArray(8.02745, 0, 0, 0.470588)
 gradient = SubResource("Gradient_xhb6q")
 use_hdr = true
 
-[sub_resource type="Gradient" id="Gradient_fk2gd"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0, 1, 1, 0.470588)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_o5cep"]
-gradient = SubResource("Gradient_fk2gd")
-use_hdr = true
-
-[sub_resource type="Gradient" id="Gradient_8c44j"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 0, 1, 0.470588)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_8cyq6"]
-gradient = SubResource("Gradient_8c44j")
-use_hdr = true
-
-[sub_resource type="Gradient" id="Gradient_yed0f"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(2, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_uoa32"]
-gradient = SubResource("Gradient_yed0f")
-width = 14
-height = 88
-use_hdr = true
-
-[sub_resource type="Gradient" id="Gradient_snh1i"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(2, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5ab83"]
-gradient = SubResource("Gradient_snh1i")
-use_hdr = true
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7r7u"]
-size = Vector2(1158, 454)
+size = Vector2(1646, 454)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_04lhf"]
 size = Vector2(992, 1096.75)
@@ -199,7 +109,7 @@ font_size = 41
 process_mode = 1
 script = ExtResource("1_ia1si")
 hold_to_exit_text = NodePath("Control/HoldToExit")
-trails = [NodePath("Player Paddle/GPUParticles2D2"), NodePath(""), NodePath("Enemy Paddle/GPUParticles2D2")]
+trails = [NodePath("Player Paddle/GPUParticles2D2"), NodePath("Ball/GPUParticles2D"), NodePath("Enemy Paddle/GPUParticles2D2")]
 pause_screen = NodePath("Control/PauseScreen")
 pause_sound = NodePath("PauseSound")
 mobile_pause_button = NodePath("Control/Pause Button")
@@ -217,40 +127,16 @@ script = ExtResource("1_fcuhb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player Paddle"]
 shape = SubResource("RectangleShape2D_hfixf")
 
+[node name="Sprite2D" type="Sprite2D" parent="Player Paddle"]
+scale = Vector2(0.219, 1.375)
+texture = SubResource("GradientTexture2D_g1dfp")
+
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="Player Paddle"]
 amount = 7
 process_material = SubResource("ParticleProcessMaterial_vwudu")
-texture = SubResource("GradientTexture2D_a5umd")
+texture = SubResource("GradientTexture2D_2fvfm")
 
-[node name="Sprite2D" type="Sprite2D" parent="Player Paddle"]
-scale = Vector2(0.219, 1.375)
-texture = SubResource("GradientTexture2D_lhoxt")
-
-[node name="VictoryParticles1" type="GPUParticles2D" parent="."]
-position = Vector2(254, 328)
-emitting = false
-amount = 55
-process_material = SubResource("ParticleProcessMaterial_x1nt8")
-texture = ExtResource("4_veauk")
-lifetime = 10.0
-one_shot = true
-speed_scale = 1.5
-explosiveness = 1.0
-trail_enabled = true
-
-[node name="VictoryParticles2" type="GPUParticles2D" parent="."]
-position = Vector2(254, 328)
-emitting = false
-amount = 55
-process_material = SubResource("ParticleProcessMaterial_x1nt8")
-texture = ExtResource("4_veauk")
-lifetime = 10.0
-one_shot = true
-speed_scale = 1.5
-explosiveness = 1.0
-trail_enabled = true
-
-[node name="Ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_score", "enemy_score", "player_paddle", "enemy_paddle", "paddle_sound_player", "wall_sound_player", "score_sound_player", "collision_particles", "victory_particles")]
+[node name="Ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_score", "enemy_score", "player_paddle", "enemy_paddle", "paddle_sound_player", "wall_sound_player", "score_sound_player")]
 process_mode = 1
 position = Vector2(254, 328)
 motion_mode = 1
@@ -262,56 +148,14 @@ enemy_paddle = NodePath("../Enemy Paddle")
 paddle_sound_player = NodePath("../PaddleSound")
 wall_sound_player = NodePath("../WallSound")
 score_sound_player = NodePath("../ScoreSound")
-collision_particles = [NodePath("CollisionParticles1"), NodePath("CollisionParticles2"), NodePath("CollisionParticles3"), NodePath("CollisionParticles4")]
-victory_particles = [NodePath("../VictoryParticles1"), NodePath("../VictoryParticles2")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("RectangleShape2D_46e58")
 
-[node name="CollisionParticles1" type="GPUParticles2D" parent="Ball"]
-emitting = false
-amount = 55
-process_material = SubResource("ParticleProcessMaterial_kcub8")
-texture = ExtResource("4_veauk")
-one_shot = true
-speed_scale = 1.5
-explosiveness = 1.0
-trail_enabled = true
-
-[node name="CollisionParticles2" type="GPUParticles2D" parent="Ball"]
-emitting = false
-amount = 55
-process_material = SubResource("ParticleProcessMaterial_kcub8")
-texture = ExtResource("4_veauk")
-one_shot = true
-speed_scale = 1.5
-explosiveness = 1.0
-trail_enabled = true
-
-[node name="CollisionParticles3" type="GPUParticles2D" parent="Ball"]
-emitting = false
-amount = 55
-process_material = SubResource("ParticleProcessMaterial_kcub8")
-texture = ExtResource("4_veauk")
-one_shot = true
-speed_scale = 1.5
-explosiveness = 1.0
-trail_enabled = true
-
-[node name="CollisionParticles4" type="GPUParticles2D" parent="Ball"]
-emitting = false
-amount = 55
-process_material = SubResource("ParticleProcessMaterial_kcub8")
-texture = ExtResource("4_veauk")
-one_shot = true
-speed_scale = 1.5
-explosiveness = 1.0
-trail_enabled = true
-
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="Ball"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Ball"]
 amount = 10
-process_material = SubResource("ParticleProcessMaterial_kj565")
-texture = SubResource("GradientTexture2D_wlpf4")
+process_material = SubResource("ParticleProcessMaterial_vwudu")
+texture = SubResource("GradientTexture2D_e22sc")
 
 [node name="Sprite2D" type="Sprite2D" parent="Ball"]
 scale = Vector2(0.406, 0.406)
@@ -320,8 +164,8 @@ texture = SubResource("GradientTexture2D_ng587")
 [node name="BallPrediction" type="CharacterBody2D" parent="."]
 process_mode = 1
 position = Vector2(254, 328)
-collision_layer = 0
-collision_mask = 0
+collision_layer = 2
+collision_mask = 2
 motion_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallPrediction"]
@@ -329,62 +173,27 @@ shape = SubResource("RectangleShape2D_46e58")
 disabled = true
 
 [node name="DebugPrediction" type="Sprite2D" parent="BallPrediction"]
-visible = false
 scale = Vector2(0.406, 0.406)
 texture = SubResource("GradientTexture2D_iag7s")
 
-[node name="BallPrediction2" type="CharacterBody2D" parent="."]
-process_mode = 1
-position = Vector2(254, 328)
-collision_layer = 0
-collision_mask = 0
-motion_mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BallPrediction2"]
-shape = SubResource("RectangleShape2D_46e58")
-disabled = true
-
-[node name="DebugPrediction" type="Sprite2D" parent="BallPrediction2"]
-visible = false
-scale = Vector2(0.406, 0.406)
-texture = SubResource("GradientTexture2D_o5cep")
-
-[node name="BallPrediction3" type="CharacterBody2D" parent="."]
-process_mode = 1
-position = Vector2(254, 328)
-collision_layer = 0
-collision_mask = 0
-motion_mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BallPrediction3"]
-shape = SubResource("RectangleShape2D_46e58")
-disabled = true
-
-[node name="DebugPrediction" type="Sprite2D" parent="BallPrediction3"]
-visible = false
-scale = Vector2(0.406, 0.406)
-texture = SubResource("GradientTexture2D_8cyq6")
-
-[node name="Enemy Paddle" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ball", "ball_prediction", "ball_prediction2", "ball_prediction3")]
+[node name="Enemy Paddle" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ball", "ball_prediction")]
 process_mode = 1
 position = Vector2(1118, 324)
 script = ExtResource("2_lo17t")
 ball = NodePath("../Ball")
 ball_prediction = NodePath("../BallPrediction")
-ball_prediction2 = NodePath("../BallPrediction2")
-ball_prediction3 = NodePath("../BallPrediction3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy Paddle"]
 shape = SubResource("RectangleShape2D_hfixf")
 
+[node name="Sprite2D" type="Sprite2D" parent="Enemy Paddle"]
+scale = Vector2(0.219, 1.375)
+texture = SubResource("GradientTexture2D_g1dfp")
+
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="Enemy Paddle"]
 amount = 7
 process_material = SubResource("ParticleProcessMaterial_vwudu")
-texture = SubResource("GradientTexture2D_uoa32")
-
-[node name="Sprite2D" type="Sprite2D" parent="Enemy Paddle"]
-scale = Vector2(0.219, 1.375)
-texture = SubResource("GradientTexture2D_5ab83")
+texture = SubResource("GradientTexture2D_2fvfm")
 
 [node name="UpDownWall" type="StaticBody2D" parent="."]
 collision_layer = 3
@@ -407,15 +216,6 @@ shape = SubResource("RectangleShape2D_04lhf")
 [node name="EnemyWall" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="EnemyWall"]
-position = Vector2(1648, 324)
-shape = SubResource("RectangleShape2D_04lhf")
-
-[node name="PredictionWall" type="StaticBody2D" parent="."]
-position = Vector2(-34, 0)
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="PredictionWall"]
 position = Vector2(1648, 324)
 shape = SubResource("RectangleShape2D_04lhf")
 
@@ -462,15 +262,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1158.0
 offset_bottom = 653.0
-
-[node name="Controls Screen" type="Label" parent="Control"]
-offset_left = 32.0
-offset_top = 28.0
-offset_right = 232.0
-offset_bottom = 92.0
-theme_override_font_sizes/font_size = 46
-text = "Controls:"
-script = ExtResource("11_dxc4w")
 
 [node name="HoldToExit" type="Label" parent="Control"]
 modulate = Color(1, 1, 1, 0)

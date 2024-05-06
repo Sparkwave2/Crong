@@ -33,7 +33,7 @@ var first_start = true
 
 var crt_material = preload("res://crt.tres")
 
-var version = "Alpha 0.0.2"
+var version = "Alpha 0.0.3"
 var builddate = "06.05.2024"
 
 var mobile_layout = false

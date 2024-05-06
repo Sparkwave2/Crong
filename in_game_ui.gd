@@ -45,6 +45,14 @@ func _process(delta):
 func _physics_process(delta):
 	pause_timer -= 1
 	
+	var screen_size = get_viewport().get_visible_rect().size
+	var rng = RandomNumberGenerator.new()
+	var rnd_x = rng.randi_range(20, screen_size.x-20)
+	var rnd_y = rng.randi_range(20, screen_size.y-20)
+	var randompos = Vector2(rnd_x, rnd_y)
+	
+	
+	
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and Autoload.mobile_layout:
 		pause_sound.play()

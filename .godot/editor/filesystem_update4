@@ -14,3 +14,6 @@ res://blur.gdshader
 res://pause_screen.gd
 res://crt.tres
 res://Ball.gd
+res://EnemyPaddle.gd
+res://addons/debugdraw2d/DebugDraw2D.gd
+res://controls_displayer.gd

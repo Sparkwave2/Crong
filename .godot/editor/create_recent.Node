@@ -1,13 +1,13 @@
+Label
+GPUParticles2D
 Button
 AudioStreamPlayer
-Label
 VBoxContainer
 ColorRect
 Panel
 Control
 HSlider
 HBoxContainer
-GPUParticles2D
 WorldEnvironment
 AudioStreamPlayer2D
 StaticBody2D
