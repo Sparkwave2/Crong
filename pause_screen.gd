@@ -5,10 +5,14 @@ class_name PauseScreen
 
 @export var in_game_ui: InGameUI
 
+@export var list_of_buttons: Array[Button]
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if Autoload.mobile_layout:
+		for button in list_of_buttons:
+			button.add_theme_font_size_override("font_size", 60)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

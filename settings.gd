@@ -27,18 +27,21 @@ var temp_volume: int
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility":
-		bloom_button.queue_free()
+		bloom_button.queue_free() # Bloom doesn't work in OpenGL mode
 	if OS.get_name() == "Web":
-		vsync_button.queue_free()
+		vsync_button.queue_free() # VSync doesn't do anything in web version
+		if Autoload.mobile_layout:
+			control_button.disabled = true # Gyroscope doesn't work on web mobile
 	if Autoload.mobile_layout:
 		vsync_button.queue_free()
-		fullscreen_button.queue_free()
-		get_tree().set_auto_accept_quit(false)
+		fullscreen_button.queue_free() # VSync and fullscreen don't do anything on mobile
+		get_tree().set_auto_accept_quit(false) # Attempt to stop the back button from exiting the app
 		for button in list_of_buttons:
-			button.add_theme_font_size_override("font_size", 40)
+			button.add_theme_font_size_override("font_size", 40) # Increase button font size
 		volume_label.add_theme_font_size_override("font_size", 30)
 	select_sound.play()
 	update_text()
+	update_display_server_text()
 	update_sliders()
 
 
@@ -46,13 +49,14 @@ func _ready():
 func _process(delta):
 	pass
 	
+## Update options that aren't sliders and that don't change the display server.
 func update_text():
 	match Autoload.control_mode:
 		0:
 			control_button.text = "Keyboard Only"
 		1:
 			if DisplayServer.is_touchscreen_available():
-				control_button.text = "Mouse/Touch"
+				control_button.text = "Mouse/Touch" # Could be a PC with a touchscreen
 			else:
 				control_button.text = "Mouse"
 		2:
@@ -63,10 +67,46 @@ func update_text():
 			control_button.text = "Accelerometer"
 			
 	if OS.get_name() == "Web":
-		fullscreen_button.text = "Go Fullscreen"
+		fullscreen_button.text = "Go Fullscreen" # On web, fullscreen is one-way
 	elif Autoload.mobile_layout:
 		pass
-	else:
+			
+	match Autoload.aberration:
+		0:
+			aberration_button.text = "No Aberration"
+			Autoload.crt_material.set_shader_parameter("aberration", 0)
+		1:
+			aberration_button.text = "Weak Aberration"
+			Autoload.crt_material.set_shader_parameter("aberration", 1)
+		2:
+			aberration_button.text = "Strong Aberration"
+			Autoload.crt_material.set_shader_parameter("aberration", 2)
+			
+	match Autoload.trails:
+		0:
+			trails_button.text = "Trails Off"
+		1:
+			trails_button.text = "Trails On"
+	
+	if ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility":
+		return
+		
+	match Autoload.bloom:
+		0:
+			bloom_button.text = "Bloom Off"
+			world_environment.environment.glow_enabled = false
+		1:
+			bloom_button.text = "Bloom On"
+			world_environment.environment.glow_enabled = true
+
+## Update options that are based on sliders.
+func update_sliders():
+	volume_slider.value = Autoload.audio_volume_displayed
+	volume_label.text = "Volume: " + str(volume_slider.value) + "%"
+	
+## Update options that require modifying the display server. This is in a separate function because those options cause lag when changed.
+func update_display_server():
+	if OS.get_name() != "Web":
 		match Autoload.fullscreen:
 			0:
 				fullscreen_button.text = "Windowed"
@@ -89,38 +129,26 @@ func update_text():
 			2:
 				vsync_button.text = "VSync On"
 				DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+				
+## Update just the text of the display server options, to not cause lag
+func update_display_server_text():
+	if OS.get_name() != "Web":
+		match Autoload.fullscreen:
+			0:
+				fullscreen_button.text = "Windowed"
+			1:
+				fullscreen_button.text = "Borderless"
+			2:
+				fullscreen_button.text = "Fullscreen"
 			
-	match Autoload.aberration:
-		0:
-			aberration_button.text = "No Aberr."
-			Autoload.crt_material.set_shader_parameter("aberration", 0)
-		1:
-			aberration_button.text = "Weak Aberr."
-			Autoload.crt_material.set_shader_parameter("aberration", 1)
-		2:
-			aberration_button.text = "Strong Aberr."
-			Autoload.crt_material.set_shader_parameter("aberration", 2)
 			
-	match Autoload.trails:
-		0:
-			trails_button.text = "Trails Off"
-		1:
-			trails_button.text = "Trails On"
-	
-	if ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility":
-		return
-		
-	match Autoload.bloom:
-		0:
-			bloom_button.text = "Bloom Off"
-			world_environment.environment.glow_enabled = false
-		1:
-			bloom_button.text = "Bloom On"
-			world_environment.environment.glow_enabled = true
-
-func update_sliders():
-	volume_slider.value = Autoload.audio_volume_displayed
-	volume_label.text = "Volume: " + str(volume_slider.value) + "%"
+		match Autoload.vsync:
+			0:
+				vsync_button.text = "VSync Off"
+			1:
+				vsync_button.text = "VSync Adaptive"
+			2:
+				vsync_button.text = "VSync On"
 
 
 func _on_back_pressed():
@@ -153,7 +181,7 @@ func _on_fullscreen_pressed():
 		Autoload.fullscreen += 1
 		if Autoload.fullscreen > 2:
 			Autoload.fullscreen = 0
-	update_text()
+	update_display_server()
 
 
 func _on_v_sync_pressed():
@@ -161,7 +189,7 @@ func _on_v_sync_pressed():
 	Autoload.vsync += 1
 	if Autoload.vsync > 2:
 		Autoload.vsync = 0
-	update_text()
+	update_display_server()
 
 
 func _on_aberration_pressed():

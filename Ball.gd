@@ -28,7 +28,8 @@ func _process(delta):
 		var collider = collision.get_collider()
 		match collider.name:
 			"UpDownWall":
-				ball_velocity = Vector2(ball_velocity.x + 0.2, -ball_velocity.y + 0.2)
+				var bounce = ball_velocity.bounce(collision.get_normal())
+				ball_velocity = Vector2(bounce.x + 0.2, (bounce.y + 0.2))
 				wall_sound_player.play()
 			"PlayerWall":
 				enemy_score_val += 1
@@ -41,11 +42,14 @@ func _process(delta):
 				reset_pos()
 				score_sound_player.play()
 			"Player Paddle":
-				ball_velocity = Vector2(-ball_velocity.x, ball_velocity.y + collider.current_movement * 0.5) * 1.1
+				#ball_velocity = Vector2(-ball_velocity.x, ball_velocity.y + collider.current_movement * 0.5) * 1.1
+				var bounce = ball_velocity.bounce(collision.get_normal())
+				ball_velocity = Vector2(bounce.x, bounce.y + collider.current_movement * 0.5) * 1.1
 				paddle_sound_player.play()
 				last_bounce = 0
 			"Enemy Paddle":
-				ball_velocity = Vector2(-ball_velocity.x, ball_velocity.y + collider.current_movement * 0.5) * 1.1
+				var bounce = ball_velocity.bounce(collision.get_normal())
+				ball_velocity = Vector2(bounce.x, bounce.y + collider.current_movement * 0.5) * 1.1
 				paddle_sound_player.play()
 				last_bounce = 1
 		ball_velocity = Vector2(ball_velocity.x, clampf(ball_velocity.y, -3, 3))

@@ -4,5 +4,5 @@
 
 [resource]
 shader = ExtResource("1_1erco")
-shader_parameter/aberration = 0
+shader_parameter/aberration = 1
 shader_parameter/web_compat = false

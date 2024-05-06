@@ -12,3 +12,5 @@ res://audio_buses.tres
 res://in_game_ui.gd
 res://blur.gdshader
 res://pause_screen.gd
+res://crt.tres
+res://Ball.gd

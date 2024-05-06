@@ -264,7 +264,7 @@ scale = Vector2(0.153847, 0.153847)
 icon = ExtResource("10_othg6")
 icon_alignment = 1
 
-[node name="PauseScreen" type="ColorRect" parent="Control" node_paths=PackedStringArray("pause_sound", "in_game_ui")]
+[node name="PauseScreen" type="ColorRect" parent="Control" node_paths=PackedStringArray("pause_sound", "in_game_ui", "list_of_buttons")]
 process_mode = 2
 visible = false
 layout_mode = 1
@@ -277,6 +277,7 @@ color = Color(0.266667, 0.266667, 0.266667, 0.980392)
 script = ExtResource("9_vnqyr")
 pause_sound = NodePath("../../PauseSound")
 in_game_ui = NodePath("../..")
+list_of_buttons = [NodePath("VBoxContainer/Continue"), NodePath("VBoxContainer/Quit")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PauseScreen"]
 layout_mode = 1
