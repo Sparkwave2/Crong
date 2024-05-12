@@ -1,9 +1,11 @@
-[gd_scene load_steps=55 format=3 uid="uid://bjoqm0rgwcrx2"]
+[gd_scene load_steps=62 format=3 uid="uid://bjoqm0rgwcrx2"]
 
 [ext_resource type="Script" path="res://Player Paddle.gd" id="1_fcuhb"]
 [ext_resource type="Script" path="res://Ball.gd" id="1_hv3vh"]
 [ext_resource type="Script" path="res://in_game_ui.gd" id="1_ia1si"]
+[ext_resource type="Script" path="res://PowerupSpawner.gd" id="2_cv768"]
 [ext_resource type="Script" path="res://EnemyPaddle.gd" id="2_lo17t"]
+[ext_resource type="PackedScene" uid="uid://cud4vj24kln28" path="res://powerup.tscn" id="3_hielr"]
 [ext_resource type="AudioStream" uid="uid://c6umstspcgfu4" path="res://boing.wav" id="4_f7wqr"]
 [ext_resource type="Texture2D" uid="uid://bmwvkhhunqn1c" path="res://circle.svg" id="4_veauk"]
 [ext_resource type="AudioStream" uid="uid://ddd4bsc1yxg12" path="res://wall.wav" id="5_fg065"]
@@ -15,6 +17,17 @@
 [ext_resource type="Script" path="res://pause_screen.gd" id="9_vnqyr"]
 [ext_resource type="Texture2D" uid="uid://mlt1na6skii3" path="res://pausefilled.png" id="10_othg6"]
 [ext_resource type="Script" path="res://controls_displayer.gd" id="11_dxc4w"]
+[ext_resource type="AudioStream" uid="uid://b1elxa3ll75g2" path="res://powerup.wav" id="12_auch0"]
+
+[sub_resource type="Gradient" id="Gradient_y4ogi"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hxugv"]
+gradient = SubResource("Gradient_y4ogi")
+width = 60
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_unl8n"]
+size = Vector2(60, 64)
 
 [sub_resource type="Gradient" id="Gradient_1ur6l"]
 interpolation_mode = 1
@@ -23,6 +36,7 @@ colors = PackedColorArray(5, 5, 5, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_l7p6r"]
 gradient = SubResource("Gradient_1ur6l")
+width = 63
 use_hdr = true
 fill_to = Vector2(0, 0.05)
 repeat = 1
@@ -46,7 +60,7 @@ alpha_curve = SubResource("CurveTexture_s6nr6")
 
 [sub_resource type="Gradient" id="Gradient_0du0c"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0, 1, 0, 1)
+colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_a5umd"]
 gradient = SubResource("Gradient_0du0c")
@@ -56,7 +70,7 @@ use_hdr = true
 
 [sub_resource type="Gradient" id="Gradient_75n6d"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0, 1, 0, 1)
+colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lhoxt"]
 gradient = SubResource("Gradient_75n6d")
@@ -159,7 +173,7 @@ use_hdr = true
 
 [sub_resource type="Gradient" id="Gradient_yed0f"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(2, 0, 0, 1)
+colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_uoa32"]
 gradient = SubResource("Gradient_yed0f")
@@ -168,8 +182,8 @@ height = 88
 use_hdr = true
 
 [sub_resource type="Gradient" id="Gradient_snh1i"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(2, 0, 0, 1)
+offsets = PackedFloat32Array(0.99375)
+colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5ab83"]
 gradient = SubResource("Gradient_snh1i")
@@ -192,17 +206,54 @@ glow_enabled = true
 glow_blend_mode = 1
 glow_hdr_threshold = 0.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_gr3db"]
+font_size = 46
+
 [sub_resource type="LabelSettings" id="LabelSettings_rv611"]
 font_size = 41
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("hold_to_exit_text", "trails", "pause_screen", "pause_sound", "mobile_pause_button")]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("hold_to_exit_text", "trails", "particles", "colorable_sprites", "pause_screen", "pause_sound", "mobile_pause_button", "player_powerup_text", "enemy_powerup_text", "player_obstacle", "enemy_obstacle")]
 process_mode = 1
 script = ExtResource("1_ia1si")
 hold_to_exit_text = NodePath("Control/HoldToExit")
-trails = [NodePath("Player Paddle/GPUParticles2D2"), NodePath(""), NodePath("Enemy Paddle/GPUParticles2D2")]
+trails = [NodePath("Player Paddle/GPUParticles2D2"), NodePath("Ball/GPUParticles2D2"), NodePath("Enemy Paddle/GPUParticles2D2")]
+particles = [NodePath("VictoryParticles1"), NodePath("VictoryParticles2"), NodePath("Ball/CollisionParticles1"), NodePath("Ball/CollisionParticles2"), NodePath("Ball/CollisionParticles3"), NodePath("Ball/CollisionParticles4")]
+colorable_sprites = [NodePath("Player Paddle/Sprite2D"), NodePath("Ball/Sprite2D"), NodePath("Enemy Paddle/Sprite2D")]
 pause_screen = NodePath("Control/PauseScreen")
 pause_sound = NodePath("PauseSound")
 mobile_pause_button = NodePath("Control/Pause Button")
+player_powerup_text = NodePath("Control/PlayerPowerup")
+enemy_powerup_text = NodePath("Control/EnemyPowerup")
+player_obstacle = NodePath("PlayerObstacle")
+enemy_obstacle = NodePath("EnemyObstacle")
+
+[node name="PowerupSpawner" type="Node2D" parent="."]
+script = ExtResource("2_cv768")
+powerup = ExtResource("3_hielr")
+
+[node name="PlayerObstacle" type="StaticBody2D" parent="."]
+position = Vector2(146, 324)
+scale = Vector2(0.1, 3)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerObstacle"]
+texture = SubResource("GradientTexture2D_hxugv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerObstacle"]
+shape = SubResource("RectangleShape2D_unl8n")
+
+[node name="EnemyObstacle" type="StaticBody2D" parent="."]
+position = Vector2(1006, 324)
+scale = Vector2(0.1, 3)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyObstacle"]
+texture = SubResource("GradientTexture2D_hxugv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyObstacle"]
+shape = SubResource("RectangleShape2D_unl8n")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 position = Vector2(576, 331)
@@ -250,9 +301,11 @@ speed_scale = 1.5
 explosiveness = 1.0
 trail_enabled = true
 
-[node name="Ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_score", "enemy_score", "player_paddle", "enemy_paddle", "paddle_sound_player", "wall_sound_player", "score_sound_player", "collision_particles", "victory_particles")]
+[node name="Ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_score", "enemy_score", "player_paddle", "enemy_paddle", "paddle_sound_player", "wall_sound_player", "score_sound_player", "powerup_sound_player", "collision_particles", "victory_particles", "powerup_spawner")]
 process_mode = 1
 position = Vector2(254, 328)
+collision_layer = 5
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_hv3vh")
 player_score = NodePath("../PlayerScore")
@@ -262,8 +315,10 @@ enemy_paddle = NodePath("../Enemy Paddle")
 paddle_sound_player = NodePath("../PaddleSound")
 wall_sound_player = NodePath("../WallSound")
 score_sound_player = NodePath("../ScoreSound")
+powerup_sound_player = NodePath("../PowerupSound")
 collision_particles = [NodePath("CollisionParticles1"), NodePath("CollisionParticles2"), NodePath("CollisionParticles3"), NodePath("CollisionParticles4")]
 victory_particles = [NodePath("../VictoryParticles1"), NodePath("../VictoryParticles2")]
+powerup_spawner = NodePath("../PowerupSpawner")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("RectangleShape2D_46e58")
@@ -453,6 +508,10 @@ stream = ExtResource("6_qj5jl")
 process_mode = 3
 stream = ExtResource("8_jlp4q")
 
+[node name="PowerupSound" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("12_auch0")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p3ske")
 script = ExtResource("7_wotgp")
@@ -463,7 +522,38 @@ anchors_preset = 0
 offset_right = 1158.0
 offset_bottom = 653.0
 
+[node name="PlayerPowerup" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -89.0
+offset_right = 341.0
+offset_bottom = -25.0
+grow_vertical = 0
+text = "Powerup 10"
+label_settings = SubResource("LabelSettings_gr3db")
+
+[node name="EnemyPowerup" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -341.0
+offset_top = -89.0
+offset_right = -25.0
+offset_bottom = -25.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "10 Powerup"
+label_settings = SubResource("LabelSettings_gr3db")
+horizontal_alignment = 2
+
 [node name="Controls Screen" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = 32.0
 offset_top = 28.0
 offset_right = 232.0

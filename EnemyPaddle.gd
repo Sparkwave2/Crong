@@ -10,6 +10,14 @@ var current_movement: float = 0
 var speed: float = 5
 
 func _process(delta):
+	if Autoload.enemy_powerup == 2:
+		speed = 10
+	else:
+		speed = 5
+	if Autoload.enemy_powerup == 1:
+		scale.y = 2
+	else:
+		scale.y = 1
 	var target_movement
 	var distance_from_ball = transform.origin.x - ball.transform.origin.x # Distance from enemy paddle to ball, for the purpose of math
 	

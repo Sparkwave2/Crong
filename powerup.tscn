@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://cud4vj24kln28"]
+
+[sub_resource type="Curve" id="Curve_aqs5t"]
+_data = [Vector2(0, 0.505494), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_f60h7"]
+curve = SubResource("Curve_aqs5t")
+
+[sub_resource type="Curve" id="Curve_khivn"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qxw23"]
+curve = SubResource("Curve_khivn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sdoo2"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 50.0
+scale_max = 50.0
+scale_curve = SubResource("CurveTexture_qxw23")
+alpha_curve = SubResource("CurveTexture_f60h7")
+
+[sub_resource type="Gradient" id="Gradient_8g6jl"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b7onp"]
+gradient = SubResource("Gradient_8g6jl")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3vtj"]
+size = Vector2(26, 26)
+
+[node name="Powerup" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 2
+process_material = SubResource("ParticleProcessMaterial_sdoo2")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.406, 0.406)
+texture = SubResource("GradientTexture2D_b7onp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_l3vtj")

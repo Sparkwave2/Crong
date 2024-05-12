@@ -8,6 +8,12 @@ extends VBoxContainer
 @export var aberration_button: Button
 @export var bloom_button: Button
 @export var trails_button: Button
+@export var particles_button: Button
+@export var vibrations_button: Button
+
+@export var color_buttons: Array[ColorPickerButton]
+@export var color_labels: Array[Label]
+@export var color_main_label: Label
 
 @export var volume_slider: Slider
 @export var volume_label: Label
@@ -28,6 +34,7 @@ var temp_volume: int
 func _ready():
 	if ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility":
 		bloom_button.queue_free() # Bloom doesn't work in OpenGL mode
+		particles_button.queue_free() # Neither do proper GPU particles
 	if OS.get_name() == "Web":
 		vsync_button.queue_free() # VSync doesn't do anything in web version
 		if Autoload.mobile_layout:
@@ -68,8 +75,6 @@ func update_text():
 			
 	if OS.get_name() == "Web":
 		fullscreen_button.text = "Go Fullscreen" # On web, fullscreen is one-way
-	elif Autoload.mobile_layout:
-		pass
 			
 	match Autoload.aberration:
 		0:
@@ -87,6 +92,16 @@ func update_text():
 			trails_button.text = "Trails Off"
 		1:
 			trails_button.text = "Trails On"
+			
+	match Autoload.vibrations:
+		0:
+			vibrations_button.text = "Vibrations Off"
+		1:
+			vibrations_button.text = "Vibrations On"
+			
+	color_buttons[0].color = Autoload.player_color
+	color_buttons[1].color = Autoload.ball_color
+	color_buttons[2].color = Autoload.enemy_color
 	
 	if ProjectSettings.get_setting("rendering/renderer/rendering_method") == "gl_compatibility":
 		return
@@ -98,10 +113,16 @@ func update_text():
 		1:
 			bloom_button.text = "Bloom On"
 			world_environment.environment.glow_enabled = true
+			
+	match Autoload.particles:
+		0:
+			particles_button.text = "Particles Off"
+		1:
+			particles_button.text = "Particles On"
 
 ## Update options that are based on sliders.
 func update_sliders():
-	volume_slider.value = Autoload.audio_volume_displayed
+	volume_slider.value = Autoload.audio_volume_percent
 	volume_label.text = "Volume: " + str(volume_slider.value) + "%"
 	
 ## Update options that require modifying the display server. This is in a separate function because those options cause lag when changed.
@@ -152,6 +173,25 @@ func update_display_server_text():
 
 
 func _on_back_pressed():
+	var config = ConfigFile.new()
+	config.set_value("settings", "control_mode", Autoload.control_mode)
+	config.set_value("settings", "fullscreen", Autoload.fullscreen)
+	config.set_value("settings", "vsync", Autoload.vsync)
+	config.set_value("settings", "aberration", Autoload.aberration)
+	config.set_value("settings", "bloom", Autoload.bloom)
+	config.set_value("settings", "trails", Autoload.trails)
+	config.set_value("settings", "particles", Autoload.particles)
+	config.set_value("settings", "vibrations", Autoload.vibrations)
+	config.set_value("settings", "player_color", Autoload.player_color)
+	config.set_value("settings", "ball_color", Autoload.ball_color)
+	config.set_value("settings", "enemy_color", Autoload.enemy_color)
+	config.set_value("settings", "sfx_volume", Autoload.audio_volume_percent)
+	var err = config.save("user://settings.cfg")
+	if err == 7:
+		var file = FileAccess.open("user://settings.cfg",FileAccess.WRITE_READ)
+		file.close()
+		print("Settings not found, new settings created.")
+		config.save("user://settings.cfg")
 	get_tree().change_scene_to_file("res://menu.tscn")
 	
 func _notification(what):
@@ -213,11 +253,27 @@ func _on_trails_pressed():
 	if Autoload.trails > 1:
 		Autoload.trails = 0
 	update_text()
+	
+func _on_particles_pressed():
+	select_sound.play()
+	Autoload.particles += 1
+	if Autoload.particles > 1:
+		Autoload.particles = 0
+	update_text()
+
+func _on_vibrations_pressed():
+	select_sound.play()
+	Autoload.vibrations += 1
+	if Autoload.vibrations > 1:
+		Autoload.vibrations = 0
+	update_text()
+
 
 
 
 func _on_volume_slider_value_changed(value):
 	sound_preview.play()
+	Autoload.audio_volume_percent = value
 	var int_to_db = (20 * log(value)) - 92.10340371976184
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), int_to_db)
 	# print(str(value) + ", " + str(int_to_db))
@@ -226,3 +282,9 @@ func _on_volume_slider_value_changed(value):
 	
 func _on_volume_slider_drag_ended(value_changed):
 	Autoload.audio_volume_displayed = temp_volume
+
+
+func _on_color_changed(color):
+	Autoload.player_color = color_buttons[0].color
+	Autoload.ball_color = color_buttons[1].color
+	Autoload.enemy_color = color_buttons[2].color

@@ -1,19 +1,14 @@
-res://settings.tscn
+res://main.tscn
 res://crt.gdshader
 res://ui.tres
+res://blur.gdshader
 res://menu.tscn
+res://settings.tscn
 res://settings.gd
 res://autoload.gd
-res://main.tscn
-res://Player Paddle.gd
-res://auto_version_text.gd
-res://menu.gd
-res://audio_buses.tres
 res://in_game_ui.gd
-res://blur.gdshader
-res://pause_screen.gd
-res://crt.tres
 res://Ball.gd
+res://powerup.tscn
+res://PowerupSpawner.gd
+res://Player Paddle.gd
 res://EnemyPaddle.gd
-res://addons/debugdraw2d/DebugDraw2D.gd
-res://controls_displayer.gd

@@ -17,8 +17,8 @@ glow_enabled = true
 glow_blend_mode = 1
 glow_hdr_threshold = 0.0
 
-[sub_resource type="LabelSettings" id="LabelSettings_juybx"]
-font_size = 157
+[sub_resource type="LabelSettings" id="LabelSettings_ddmka"]
+font_size = 91
 font_color = Color(1.4, 1.4, 1.4, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ljy7n"]
@@ -92,10 +92,10 @@ anchor_right = 0.5
 offset_left = -223.0
 offset_top = -10.0
 offset_right = 228.0
-offset_bottom = 204.0
+offset_bottom = 142.0
 grow_horizontal = 2
 text = "Crong"
-label_settings = SubResource("LabelSettings_juybx")
+label_settings = SubResource("LabelSettings_ddmka")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -109,7 +109,7 @@ offset_top = -184.0
 offset_right = 388.0
 offset_bottom = -6.0
 grow_vertical = 0
-text = "Ver Alpha 0.0.2"
+text = "Ver Alpha 0.0.4"
 label_settings = SubResource("LabelSettings_ljy7n")
 vertical_alignment = 2
 script = ExtResource("4_eyfyr")
