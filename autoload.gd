@@ -31,6 +31,7 @@ var vibrations = 1
 # 0 - Vibrations Off
 # 1 - Vibrations On
 var difficulty = 1
+# -1 - Baby
 # 0 - Easy
 # 1 - Medium
 # 2 - Hard
@@ -40,8 +41,8 @@ var first_start = true
 
 var crt_material = preload("res://crt.tres")
 
-var version = "Alpha 0.0.4"
-var builddate = "12.05.2024"
+var version = "Alpha 0.1"
+var builddate = "21.09.2024"
 
 var mobile_layout = false
 
@@ -55,9 +56,16 @@ var enemy_powerup = 0
 # 1 - Tall Paddle
 # 2 - Speed Boost
 # 3 - Obstacle
+# 4 - Fastball
+# 5 - Gravity
+# 6 - Vert Boost
+# 7 - RC Ball
+# 8 - Chrono Field
 
 var player_powerup_timer = 0
 var enemy_powerup_timer = 0
+
+var playercount = 0
 
 
 # Called when the node enters the scene tree for the first time.

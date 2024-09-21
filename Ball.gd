@@ -4,8 +4,8 @@ class_name Ball
 @export var player_score: Label
 @export var enemy_score: Label
 
-@export var player_paddle: CharacterBody2D
-@export var enemy_paddle: CharacterBody2D
+@export var player_paddle: PlayerPaddle
+@export var enemy_paddle: EnemyPaddle
 
 @export var paddle_sound_player: AudioStreamPlayer
 @export var wall_sound_player: AudioStreamPlayer
@@ -16,6 +16,7 @@ class_name Ball
 @export var victory_particles: Array[GPUParticles2D]
 
 @export var powerup_spawner: Node2D
+@export var level_spawner: LevelSpawner
 
 var which_collision_particles = 0
 var which_victory_particles = 0
@@ -24,6 +25,8 @@ var player_score_val = 0
 var enemy_score_val = 0
 
 var ball_velocity = Vector2(1, 1)
+
+var speed_mult = 1
 
 var timer = 30
 
@@ -37,10 +40,43 @@ func _ready():
 	pass # Replace with function body.
 	
 func _process(delta):
-	var collision = move_and_collide(ball_velocity * delta * 200)
+	if Autoload.player_powerup == 4 and lasthit == 1:
+		speed_mult = 1.5
+	elif Autoload.enemy_powerup == 4 and lasthit == 2:
+		speed_mult = 1.5
+	elif Autoload.player_powerup == 8 and position.distance_to(player_paddle.position) <= 200:
+		speed_mult = 0.5
+	elif Autoload.enemy_powerup == 8 and position.distance_to(enemy_paddle.position) <= 200:
+		speed_mult = 0.5
+	else:
+		speed_mult = 1
+	if Autoload.player_powerup == 5 and lasthit == 1:
+		ball_velocity -= Vector2(0, -10 * delta)
+	elif Autoload.enemy_powerup == 5 and lasthit == 2:
+		ball_velocity -= Vector2(0, -10 * delta)
+		
+	if Autoload.player_powerup == 7 and lasthit == 1:
+		ball_velocity.y += player_paddle.current_movement * delta * 2
+	elif Autoload.enemy_powerup == 7 and lasthit == 2:
+		ball_velocity.y += enemy_paddle.current_movement * delta * 2
+		
+	var collision = move_and_collide(ball_velocity * delta * speed_mult * 200)
 	if collision:
 		var collider = collision.get_collider()
 		if collider.name in ["UpDownWall", "PlayerObstacle", "EnemyObstacle"]:
+			var bounce = ball_velocity.bounce(collision.get_normal())
+			ball_velocity = Vector2(bounce.x, (bounce.y))
+			var mat: ParticleProcessMaterial = collision_particles[which_collision_particles].process_material
+			mat.direction = Vector3(collision.get_normal().x, collision.get_normal().y, 0)
+			collision_particles[which_collision_particles].emitting = true
+			which_collision_particles += 1
+			if which_collision_particles > 3:
+				which_collision_particles = 0
+			wall_sound_player.pitch_scale = randf_range(0.8, 1.2)
+			wall_sound_player.play()
+			Input.vibrate_handheld(50)
+			Input.start_joy_vibration(0, 0, 1, 0.05)
+		if "StageObstacle" in collider.name:
 			var bounce = ball_velocity.bounce(collision.get_normal())
 			ball_velocity = Vector2(bounce.x, (bounce.y))
 			var mat: ParticleProcessMaterial = collision_particles[which_collision_particles].process_material
@@ -117,38 +153,77 @@ func _process(delta):
 			Input.start_joy_vibration(0, 0, 1, 0.05)
 			lasthit = 2
 		if "PowerupTallPaddle" in collider.name:
-			powerup_sound_player.play()
-			Input.vibrate_handheld(50)
-			Input.start_joy_vibration(0, 0, 1, 0.05)
 			if lasthit == 1:
 				Autoload.player_powerup = 1
 				Autoload.player_powerup_timer = 600
 			elif lasthit == 2:
 				Autoload.enemy_powerup = 1
 				Autoload.enemy_powerup_timer = 600
-			collider.queue_free()
 		if "PowerupSpeedBoost" in collider.name:
-			powerup_sound_player.play()
-			Input.vibrate_handheld(50)
-			Input.start_joy_vibration(0, 0, 1, 0.05)
 			if lasthit == 1:
 				Autoload.player_powerup = 2
 				Autoload.player_powerup_timer = 600
 			elif lasthit == 2:
 				Autoload.enemy_powerup = 2
 				Autoload.enemy_powerup_timer = 600
-			collider.queue_free()
 		if "PowerupObstacle" in collider.name:
-			powerup_sound_player.play()
-			Input.vibrate_handheld(50)
-			Input.start_joy_vibration(0, 0, 1, 0.05)
 			if lasthit == 1:
 				Autoload.player_powerup = 3
 				Autoload.player_powerup_timer = 600
 			elif lasthit == 2:
 				Autoload.enemy_powerup = 3
 				Autoload.enemy_powerup_timer = 600
+		if "PowerupFastball" in collider.name:
+			if lasthit == 1:
+				Autoload.player_powerup = 4
+				Autoload.player_powerup_timer = 600
+			elif lasthit == 2:
+				Autoload.enemy_powerup = 4
+				Autoload.enemy_powerup_timer = 600
+		if "PowerupGravity" in collider.name:
+			if lasthit == 1:
+				Autoload.player_powerup = 5
+				Autoload.player_powerup_timer = 600
+			elif lasthit == 2:
+				Autoload.enemy_powerup = 5
+				Autoload.enemy_powerup_timer = 600
+		if "PowerupVertBoost" in collider.name:
+			if lasthit == 1:
+				Autoload.player_powerup = 6
+				Autoload.player_powerup_timer = 600
+			elif lasthit == 2:
+				Autoload.enemy_powerup = 6
+				Autoload.enemy_powerup_timer = 600
+		if "PowerupRCBall" in collider.name:
+			if lasthit == 1:
+				Autoload.player_powerup = 7
+				Autoload.player_powerup_timer = 600
+			elif lasthit == 2:
+				Autoload.enemy_powerup = 7
+				Autoload.enemy_powerup_timer = 600
+		if "PowerupChronoField" in collider.name:
+			if lasthit == 1:
+				Autoload.player_powerup = 8
+				Autoload.player_powerup_timer = 600
+			elif lasthit == 2:
+				Autoload.enemy_powerup = 8
+				Autoload.enemy_powerup_timer = 600
+		if "Powerup" in collider.name:
+			powerup_sound_player.play()
+			Input.vibrate_handheld(50)
+			Input.start_joy_vibration(0, 0, 1, 0.05)
 			collider.queue_free()
+			
+	if Autoload.player_powerup == 5 and lasthit == 1:
+		return
+	elif Autoload.enemy_powerup == 5 and lasthit == 2:
+		return
+		
+	if Autoload.player_powerup == 6 and lasthit == 1:
+		ball_velocity = Vector2(ball_velocity.x, clampf(ball_velocity.y, -6, 6))
+	elif Autoload.enemy_powerup == 6 and lasthit == 2:
+		ball_velocity = Vector2(ball_velocity.x, clampf(ball_velocity.y, -6, 6))
+	else:
 		ball_velocity = Vector2(ball_velocity.x, clampf(ball_velocity.y, -3, 3))
 		
 func reset_pos():
@@ -163,3 +238,4 @@ func reset_pos():
 	for child in powerup_spawner.get_children():
 		powerup_spawner.remove_child(child)
 		child.queue_free()
+	level_spawner.spawn_level()

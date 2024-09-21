@@ -33,7 +33,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="VBoxContainer" parent="." node_paths=PackedStringArray("list_of_buttons", "difficulty_button", "exit_button", "select_sound", "exit_sound")]
+[node name="HBoxContainer" type="VBoxContainer" parent="." node_paths=PackedStringArray("list_of_buttons", "difficulty_button", "exit_button", "multiplayer_button", "select_sound", "exit_sound")]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -47,9 +47,10 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 script = ExtResource("1_eu7su")
-list_of_buttons = [NodePath("Play"), NodePath("Difficulty"), NodePath("Settings"), NodePath("Exit")]
+list_of_buttons = [NodePath("Play"), NodePath("Difficulty"), NodePath("Settings"), NodePath("Exit"), NodePath("Crongpedia")]
 difficulty_button = NodePath("Difficulty")
 exit_button = NodePath("Exit")
+multiplayer_button = NodePath("Play Multiplayer")
 select_sound = NodePath("../SelectSound")
 exit_sound = NodePath("../ExitSound")
 
@@ -57,7 +58,13 @@ exit_sound = NodePath("../ExitSound")
 layout_mode = 2
 theme = ExtResource("1_t82vs")
 theme_override_font_sizes/font_size = 36
-text = "Play"
+text = "Singleplayer"
+
+[node name="Play Multiplayer" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_t82vs")
+theme_override_font_sizes/font_size = 36
+text = "Multiplayer"
 
 [node name="Difficulty" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -72,6 +79,13 @@ size_flags_horizontal = 3
 theme = ExtResource("1_t82vs")
 theme_override_font_sizes/font_size = 36
 text = "Settings"
+
+[node name="Crongpedia" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_t82vs")
+theme_override_font_sizes/font_size = 36
+text = "Crongpedia"
 
 [node name="Exit" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -161,6 +175,8 @@ stream = ExtResource("4_a5p60")
 stream = ExtResource("5_0q3eg")
 
 [connection signal="pressed" from="HBoxContainer/Play" to="HBoxContainer" method="_on_play_pressed"]
+[connection signal="pressed" from="HBoxContainer/Play Multiplayer" to="HBoxContainer" method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="HBoxContainer/Difficulty" to="HBoxContainer" method="_on_difficulty_pressed"]
 [connection signal="pressed" from="HBoxContainer/Settings" to="HBoxContainer" method="_on_settings_pressed"]
+[connection signal="pressed" from="HBoxContainer/Crongpedia" to="HBoxContainer" method="_on_pedia_pressed"]
 [connection signal="pressed" from="HBoxContainer/Exit" to="HBoxContainer" method="_on_exit_pressed"]

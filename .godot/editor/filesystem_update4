@@ -1,14 +1,22 @@
 res://main.tscn
 res://crt.gdshader
+res://crt.tres
 res://ui.tres
 res://blur.gdshader
 res://menu.tscn
 res://settings.tscn
-res://settings.gd
-res://autoload.gd
-res://in_game_ui.gd
-res://Ball.gd
 res://powerup.tscn
+res://level_layouts/single_square.tscn
+res://level_layouts/orbit.tscn
+res://level_layouts/narrow_passageway.tscn
+res://autoload.gd
+res://Ball.gd
+res://in_game_ui.gd
 res://PowerupSpawner.gd
+res://menu.gd
 res://Player Paddle.gd
 res://EnemyPaddle.gd
+res://controls_displayer.gd
+res://pedia.tscn
+res://pedia.gd
+res://auto_version_text.gd

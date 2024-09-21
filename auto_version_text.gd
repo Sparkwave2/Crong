@@ -8,15 +8,15 @@ func _ready():
 		text_intro += OS.get_distribution_name() # Use the distro name or "LineageOS" instead
 	elif OS.get_name() == "Web":
 		if OS.has_feature("web_android"):
-			text_intro += "Android (Web Browser)"
+			text_intro += "Android (Web Browser)\nDownload the Android version\nfor more features!"
 		elif OS.has_feature("web_ios"):
 			text_intro += "iOS (Web Browser)"
 		elif OS.has_feature("web_linuxbsd"):
-			text_intro += "Linux/BSD (Web Browser)"
+			text_intro += "Linux/BSD (Web Browser)\nDownload the Linux version\nfor more features!"
 		elif OS.has_feature("web_macos"):
-			text_intro += "macOS (Web Browser)"
+			text_intro += "macOS (Web Browser)\nDownload the macOS version\nfor more features!"
 		elif OS.has_feature("web_windows"):
-			text_intro += "Windows (Web Browser)"
+			text_intro += "Windows (Web Browser)\nDownload the Windows version\nfor more features!"
 		else:
 			text_intro += "Unknown (Web Browser)"
 	else:

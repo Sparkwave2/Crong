@@ -1,0 +1,168 @@
+[gd_scene load_steps=18 format=3 uid="uid://v2wgtlqdih4i"]
+
+[ext_resource type="Script" path="res://pedia.gd" id="1_xw4d7"]
+[ext_resource type="Theme" uid="uid://jo1yymi26li8" path="res://ui.tres" id="2_afpsq"]
+[ext_resource type="Script" path="res://bloom_enabler.gd" id="3_aty6v"]
+[ext_resource type="Script" path="res://auto_version_text.gd" id="3_pqlit"]
+[ext_resource type="Material" uid="uid://caravddfeqne" path="res://crt.tres" id="4_5k8ie"]
+[ext_resource type="AudioStream" uid="uid://15qqhnxq3qsb" path="res://exit.wav" id="5_6yvad"]
+[ext_resource type="AudioStream" uid="uid://dmj8ftlh3yxqx" path="res://badoop.wav" id="6_hw7em"]
+[ext_resource type="AudioStream" uid="uid://ckk6et5w8v2ha" path="res://blip.wav" id="7_fafej"]
+
+[sub_resource type="Curve" id="Curve_sxryn"]
+_data = [Vector2(0, 0.505494), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0tuas"]
+curve = SubResource("Curve_sxryn")
+
+[sub_resource type="Curve" id="Curve_oe3e1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_w5fj4"]
+curve = SubResource("Curve_oe3e1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bvj0g"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 210.63
+scale_max = 210.63
+scale_curve = SubResource("CurveTexture_w5fj4")
+alpha_curve = SubResource("CurveTexture_0tuas")
+
+[sub_resource type="Gradient" id="Gradient_8g6jl"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b7onp"]
+gradient = SubResource("Gradient_8g6jl")
+
+[sub_resource type="Environment" id="Environment_qp7m8"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
+glow_hdr_threshold = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ljy7n"]
+font_size = 26
+font_color = Color(1.4, 1.4, 1.4, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="." node_paths=PackedStringArray("powerup_particles", "powerup_sprite", "title_text", "description_text", "select_sound", "exit_sound")]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 322.0
+offset_top = 5.0
+offset_right = -322.0
+offset_bottom = 236.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("1_xw4d7")
+powerup_particles = NodePath("PowerupParticles")
+powerup_sprite = NodePath("PowerupSprite")
+title_text = NodePath("Title")
+description_text = NodePath("Description")
+select_sound = NodePath("../SelectSound")
+exit_sound = NodePath("../ExitSound")
+
+[node name="Title" type="RichTextLabel" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 43
+text = "Big Balls"
+fit_content = true
+
+[node name="Description" type="RichTextLabel" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 23
+text = "Causes you to have big balls. More description blablablablablablabla aaaaa lorem ipsum dolor sit amet
+This bad boy can fit this much text"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Previous" type="Button" parent="HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_afpsq")
+theme_override_font_sizes/font_size = 26
+text = "Previous"
+
+[node name="Next" type="Button" parent="HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_afpsq")
+theme_override_font_sizes/font_size = 26
+text = "Next"
+
+[node name="Back" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_afpsq")
+theme_override_font_sizes/font_size = 26
+text = "Back"
+
+[node name="PowerupParticles" type="GPUParticles2D" parent="HBoxContainer"]
+position = Vector2(258, -121)
+scale = Vector2(4.15547, 4.14213)
+amount = 2
+process_material = SubResource("ParticleProcessMaterial_bvj0g")
+
+[node name="PowerupSprite" type="Sprite2D" parent="HBoxContainer"]
+position = Vector2(258, -121)
+scale = Vector2(1.6817, 1.6817)
+texture = SubResource("GradientTexture2D_b7onp")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qp7m8")
+script = ExtResource("3_aty6v")
+
+[node name="Version" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -184.0
+offset_right = 388.0
+offset_bottom = -6.0
+grow_vertical = 0
+text = "Ver Alpha 0.0.4"
+label_settings = SubResource("LabelSettings_ljy7n")
+vertical_alignment = 2
+script = ExtResource("3_pqlit")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("4_5k8ie")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ExitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_6yvad")
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_hw7em")
+
+[node name="SoundPreview" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_fafej")
+max_polyphony = 3
+
+[connection signal="pressed" from="HBoxContainer/HBoxContainer/Previous" to="HBoxContainer" method="_on_previous_pressed"]
+[connection signal="pressed" from="HBoxContainer/HBoxContainer/Next" to="HBoxContainer" method="_on_next_pressed"]
+[connection signal="pressed" from="HBoxContainer/Back" to="HBoxContainer" method="_on_back_pressed"]

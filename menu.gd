@@ -4,6 +4,7 @@ extends VBoxContainer
 
 @export var difficulty_button: Button
 @export var exit_button: Button
+@export var multiplayer_button: Button
 
 @export var select_sound: AudioStreamPlayer
 @export var exit_sound: AudioStreamPlayer
@@ -18,6 +19,8 @@ func _ready():
 	else:
 		exit_sound.play()
 	match Autoload.difficulty:
+		-1:
+			difficulty_button.text = "Baby"
 		0:
 			difficulty_button.text = "Easy"
 		1:
@@ -28,26 +31,33 @@ func _ready():
 	if Autoload.mobile_layout:
 		for button in list_of_buttons:
 			button.add_theme_font_size_override("font_size", 60)
+		multiplayer_button.queue_free()
 			
 	get_tree().set_auto_accept_quit(true)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	var node = get_parent().get_node("")
 	pass
 
 
 func _on_settings_pressed():
 	get_tree().change_scene_to_file("res://settings.tscn")
+	
+func _on_pedia_pressed():
+	get_tree().change_scene_to_file("res://pedia.tscn")
 
 
 func _on_difficulty_pressed():
 	select_sound.play()
 	Autoload.difficulty += 1
 	if Autoload.difficulty > 2:
-		Autoload.difficulty = 0
+		Autoload.difficulty = -1
 		
 	match Autoload.difficulty:
+		-1:
+			difficulty_button.text = "Baby"
 		0:
 			difficulty_button.text = "Easy"
 		1:
@@ -61,4 +71,9 @@ func _on_exit_pressed():
 
 
 func _on_play_pressed():
+	Autoload.playercount = 1
+	get_tree().change_scene_to_file("res://main.tscn")
+	
+func _on_multiplayer_pressed():
+	Autoload.playercount = 2
 	get_tree().change_scene_to_file("res://main.tscn")

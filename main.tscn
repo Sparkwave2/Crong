@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://bjoqm0rgwcrx2"]
+[gd_scene load_steps=68 format=3 uid="uid://bjoqm0rgwcrx2"]
 
 [ext_resource type="Script" path="res://Player Paddle.gd" id="1_fcuhb"]
 [ext_resource type="Script" path="res://Ball.gd" id="1_hv3vh"]
@@ -8,16 +8,28 @@
 [ext_resource type="PackedScene" uid="uid://cud4vj24kln28" path="res://powerup.tscn" id="3_hielr"]
 [ext_resource type="AudioStream" uid="uid://c6umstspcgfu4" path="res://boing.wav" id="4_f7wqr"]
 [ext_resource type="Texture2D" uid="uid://bmwvkhhunqn1c" path="res://circle.svg" id="4_veauk"]
+[ext_resource type="Script" path="res://LevelSpawner.gd" id="5_aw15m"]
 [ext_resource type="AudioStream" uid="uid://ddd4bsc1yxg12" path="res://wall.wav" id="5_fg065"]
+[ext_resource type="PackedScene" uid="uid://folcl0y4y2jc" path="res://level_layouts/nothing.tscn" id="6_8e5lm"]
 [ext_resource type="AudioStream" uid="uid://nhwaue7tmgt6" path="res://whoops.wav" id="6_qj5jl"]
+[ext_resource type="PackedScene" uid="uid://g0q1y8bc7j3x" path="res://level_layouts/single_square.tscn" id="7_p23dm"]
 [ext_resource type="Material" uid="uid://caravddfeqne" path="res://crt.tres" id="7_uqwj0"]
 [ext_resource type="Script" path="res://bloom_enabler.gd" id="7_wotgp"]
+[ext_resource type="PackedScene" uid="uid://80spynngxm41" path="res://level_layouts/narrow_passageway.tscn" id="8_41mo3"]
 [ext_resource type="AudioStream" uid="uid://cfqf3ed56hexw" path="res://pause.wav" id="8_jlp4q"]
 [ext_resource type="Theme" uid="uid://jo1yymi26li8" path="res://ui.tres" id="9_bncvu"]
+[ext_resource type="PackedScene" uid="uid://cm2ewqqj5siai" path="res://level_layouts/orbit.tscn" id="9_fefew"]
 [ext_resource type="Script" path="res://pause_screen.gd" id="9_vnqyr"]
 [ext_resource type="Texture2D" uid="uid://mlt1na6skii3" path="res://pausefilled.png" id="10_othg6"]
 [ext_resource type="Script" path="res://controls_displayer.gd" id="11_dxc4w"]
+[ext_resource type="Texture2D" uid="uid://bonlnid6enmji" path="res://circle.png" id="11_i1r3u"]
 [ext_resource type="AudioStream" uid="uid://b1elxa3ll75g2" path="res://powerup.wav" id="12_auch0"]
+
+[sub_resource type="Environment" id="Environment_p3ske"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
+glow_hdr_threshold = 0.0
 
 [sub_resource type="Gradient" id="Gradient_y4ogi"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -28,20 +40,6 @@ width = 60
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_unl8n"]
 size = Vector2(60, 64)
-
-[sub_resource type="Gradient" id="Gradient_1ur6l"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0.675325)
-colors = PackedColorArray(5, 5, 5, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_l7p6r"]
-gradient = SubResource("Gradient_1ur6l")
-width = 63
-use_hdr = true
-fill_to = Vector2(0, 0.05)
-repeat = 1
-metadata/_snap_enabled = true
-metadata/_snap_count = 40
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hfixf"]
 size = Vector2(14, 88)
@@ -109,6 +107,20 @@ damping_curve = SubResource("CurveTexture_4bec1")
 scale_curve = SubResource("CurveTexture_oykcd")
 scale_over_velocity_max = 673.91
 scale_over_velocity_curve = SubResource("CurveTexture_mnvrc")
+
+[sub_resource type="Gradient" id="Gradient_1ur6l"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.675325)
+colors = PackedColorArray(5, 5, 5, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l7p6r"]
+gradient = SubResource("Gradient_1ur6l")
+width = 63
+use_hdr = true
+fill_to = Vector2(0, 0.05)
+repeat = 1
+metadata/_snap_enabled = true
+metadata/_snap_count = 40
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_46e58"]
 size = Vector2(26, 26)
@@ -200,19 +212,13 @@ line_spacing = 3.08
 font_size = 91
 font_color = Color(1.5, 1.5, 1.5, 1)
 
-[sub_resource type="Environment" id="Environment_p3ske"]
-background_mode = 3
-glow_enabled = true
-glow_blend_mode = 1
-glow_hdr_threshold = 0.0
-
 [sub_resource type="LabelSettings" id="LabelSettings_gr3db"]
 font_size = 46
 
 [sub_resource type="LabelSettings" id="LabelSettings_rv611"]
 font_size = 41
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("hold_to_exit_text", "trails", "particles", "colorable_sprites", "pause_screen", "pause_sound", "mobile_pause_button", "player_powerup_text", "enemy_powerup_text", "player_obstacle", "enemy_obstacle")]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("hold_to_exit_text", "trails", "particles", "colorable_sprites", "pause_screen", "pause_sound", "mobile_pause_button", "player_powerup_text", "enemy_powerup_text", "player_obstacle", "enemy_obstacle", "player_area", "enemy_area")]
 process_mode = 1
 script = ExtResource("1_ia1si")
 hold_to_exit_text = NodePath("Control/HoldToExit")
@@ -226,10 +232,20 @@ player_powerup_text = NodePath("Control/PlayerPowerup")
 enemy_powerup_text = NodePath("Control/EnemyPowerup")
 player_obstacle = NodePath("PlayerObstacle")
 enemy_obstacle = NodePath("EnemyObstacle")
+player_area = NodePath("Player Paddle/Area")
+enemy_area = NodePath("Enemy Paddle/Area")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p3ske")
+script = ExtResource("7_wotgp")
 
 [node name="PowerupSpawner" type="Node2D" parent="."]
 script = ExtResource("2_cv768")
 powerup = ExtResource("3_hielr")
+
+[node name="LevelSpawner" type="Node2D" parent="."]
+script = ExtResource("5_aw15m")
+levels = Array[PackedScene]([ExtResource("6_8e5lm"), ExtResource("7_p23dm"), ExtResource("8_41mo3"), ExtResource("9_fefew")])
 
 [node name="PlayerObstacle" type="StaticBody2D" parent="."]
 position = Vector2(146, 324)
@@ -255,11 +271,6 @@ texture = SubResource("GradientTexture2D_hxugv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyObstacle"]
 shape = SubResource("RectangleShape2D_unl8n")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(576, 331)
-scale = Vector2(0.0625, 15.625)
-texture = SubResource("GradientTexture2D_l7p6r")
-
 [node name="Player Paddle" type="CharacterBody2D" parent="."]
 process_mode = 1
 position = Vector2(34, 324)
@@ -276,6 +287,13 @@ texture = SubResource("GradientTexture2D_a5umd")
 [node name="Sprite2D" type="Sprite2D" parent="Player Paddle"]
 scale = Vector2(0.219, 1.375)
 texture = SubResource("GradientTexture2D_lhoxt")
+
+[node name="Area" type="Sprite2D" parent="Player Paddle"]
+visible = false
+modulate = Color(1, 0, 1, 0.258824)
+z_index = -1
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("11_i1r3u")
 
 [node name="VictoryParticles1" type="GPUParticles2D" parent="."]
 position = Vector2(254, 328)
@@ -301,7 +319,13 @@ speed_scale = 1.5
 explosiveness = 1.0
 trail_enabled = true
 
-[node name="Ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_score", "enemy_score", "player_paddle", "enemy_paddle", "paddle_sound_player", "wall_sound_player", "score_sound_player", "powerup_sound_player", "collision_particles", "victory_particles", "powerup_spawner")]
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0.392157, 0.392157, 0.392157, 0.392157)
+position = Vector2(576, 331)
+scale = Vector2(0.0625, 15.625)
+texture = SubResource("GradientTexture2D_l7p6r")
+
+[node name="Ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player_score", "enemy_score", "player_paddle", "enemy_paddle", "paddle_sound_player", "wall_sound_player", "score_sound_player", "powerup_sound_player", "collision_particles", "victory_particles", "powerup_spawner", "level_spawner")]
 process_mode = 1
 position = Vector2(254, 328)
 collision_layer = 5
@@ -319,6 +343,7 @@ powerup_sound_player = NodePath("../PowerupSound")
 collision_particles = [NodePath("CollisionParticles1"), NodePath("CollisionParticles2"), NodePath("CollisionParticles3"), NodePath("CollisionParticles4")]
 victory_particles = [NodePath("../VictoryParticles1"), NodePath("../VictoryParticles2")]
 powerup_spawner = NodePath("../PowerupSpawner")
+level_spawner = NodePath("../LevelSpawner")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("RectangleShape2D_46e58")
@@ -441,6 +466,13 @@ texture = SubResource("GradientTexture2D_uoa32")
 scale = Vector2(0.219, 1.375)
 texture = SubResource("GradientTexture2D_5ab83")
 
+[node name="Area" type="Sprite2D" parent="Enemy Paddle"]
+visible = false
+modulate = Color(1, 0, 1, 0.258824)
+z_index = -1
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("11_i1r3u")
+
 [node name="UpDownWall" type="StaticBody2D" parent="."]
 collision_layer = 3
 collision_mask = 3
@@ -511,10 +543,6 @@ stream = ExtResource("8_jlp4q")
 [node name="PowerupSound" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("12_auch0")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_p3ske")
-script = ExtResource("7_wotgp")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

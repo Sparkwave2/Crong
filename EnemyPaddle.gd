@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name EnemyPaddle
 
 @export var ball: Ball
 @export var ball_prediction: CharacterBody2D
@@ -88,6 +89,9 @@ func _process(delta):
 	
 	var actual_prediction: Vector2
 	match Autoload.difficulty:
+		-1:
+			# If baby, just move to the ball position like a dumbass
+			actual_prediction = ball.transform.origin
 		0:
 			# If easy, then just use the first collision point every single time
 			actual_prediction = ball_prediction.transform.origin
@@ -98,17 +102,30 @@ func _process(delta):
 			# If hard, use the collision point after 2 bounces
 			actual_prediction = ball_prediction3.transform.origin
 		
-	if actual_prediction.y > transform.origin.y:
-		target_movement = 1
-	elif actual_prediction.y < transform.origin.y:
-		target_movement = -1
-	else:
-		target_movement = 0
+	if Autoload.playercount == 1:
+		if actual_prediction.y > transform.origin.y:
+			target_movement = 1
+		elif actual_prediction.y < transform.origin.y:
+			target_movement = -1
+		else:
+			target_movement = 0
+	elif Autoload.playercount == 2:
+		if Input.is_key_pressed(KEY_UP) and Input.is_key_pressed(KEY_DOWN):
+			target_movement = 0
+		elif Input.is_key_pressed(KEY_UP):
+			target_movement = -speed
+		elif Input.is_key_pressed(KEY_DOWN):
+			target_movement = speed
+		else:
+			target_movement = 0
 		
 	
 		
 	current_movement = lerpf(target_movement, current_movement, 1 - delta*10)
 		
-	move_and_collide(Vector2(0, current_movement * speed * delta * 60))
+	if Autoload.playercount == 1:
+		move_and_collide(Vector2(0, current_movement * speed * delta * 60))
+	elif Autoload.playercount == 2:
+		move_and_collide(Vector2(0, current_movement * delta * 60))
 	
 	#speed = 5 + ball.player_score_val

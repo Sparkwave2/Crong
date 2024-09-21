@@ -19,6 +19,9 @@ var exit_progress = 0
 @export var player_obstacle: StaticBody2D
 @export var enemy_obstacle: StaticBody2D
 
+@export var player_area: Sprite2D
+@export var enemy_area: Sprite2D
+
 var pause_timer = 10
 
 # Called when the node enters the scene tree for the first time.
@@ -47,6 +50,12 @@ func _ready():
 	colorable_sprites[1].modulate = Autoload.ball_color
 	colorable_sprites[2].modulate = Autoload.enemy_color
 	
+	player_area.modulate = Autoload.player_color
+	enemy_area.modulate = Autoload.enemy_color
+	
+	player_area.modulate.a = 0.3
+	enemy_area.modulate.a = 0.3
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -72,43 +81,112 @@ func _process(delta):
 			player_powerup_text.modulate = Color.TRANSPARENT
 			player_obstacle.get_node("CollisionShape2D").disabled = true
 			player_obstacle.hide()
+			player_area.hide()
 		1:
 			player_powerup_text.modulate = Color.ORANGE
 			player_powerup_text.text = "Tall Paddle " + str(Autoload.player_powerup_timer/60)
 			player_obstacle.get_node("CollisionShape2D").disabled = true
 			player_obstacle.hide()
+			player_area.hide()
 		2:
 			player_powerup_text.modulate = Color.CYAN
 			player_powerup_text.text = "Speed Boost " + str(Autoload.player_powerup_timer/60)
 			player_obstacle.get_node("CollisionShape2D").disabled = true
 			player_obstacle.hide()
+			player_area.hide()
 		3:
 			player_powerup_text.modulate = Color.GREEN
 			player_powerup_text.text = "Obstacle " + str(Autoload.player_powerup_timer/60)
 			player_obstacle.get_node("CollisionShape2D").disabled = false
 			player_obstacle.get_node("Sprite2D").modulate = Autoload.player_color
 			player_obstacle.show()
+			player_area.hide()
+		4:
+			player_powerup_text.modulate = Color.BLUE
+			player_powerup_text.text = "Fastball " + str(Autoload.player_powerup_timer/60)
+			player_obstacle.get_node("CollisionShape2D").disabled = true
+			player_obstacle.hide()
+			player_area.hide()
+		5:
+			player_powerup_text.modulate = Color.DARK_GREEN
+			player_powerup_text.text = "Gravity " + str(Autoload.player_powerup_timer/60)
+			player_obstacle.get_node("CollisionShape2D").disabled = true
+			player_obstacle.hide()
+			player_area.hide()
+		6:
+			player_powerup_text.modulate = Color.YELLOW
+			player_powerup_text.text = "Vert Boost " + str(Autoload.player_powerup_timer/60)
+			player_obstacle.get_node("CollisionShape2D").disabled = true
+			player_obstacle.hide()
+			player_area.hide()
+		7:
+			player_powerup_text.modulate = Color.PURPLE
+			player_powerup_text.text = "RC Ball " + str(Autoload.player_powerup_timer/60)
+			player_obstacle.get_node("CollisionShape2D").disabled = true
+			player_obstacle.hide()
+			player_area.hide()
+		8:
+			player_powerup_text.modulate = Color.MEDIUM_SPRING_GREEN
+			player_powerup_text.text = "Chrono Field " + str(Autoload.player_powerup_timer/60)
+			player_obstacle.get_node("CollisionShape2D").disabled = true
+			player_obstacle.hide()
+			player_area.show()
+			
 	match Autoload.enemy_powerup:
 		0:
 			enemy_powerup_text.modulate = Color.TRANSPARENT
 			enemy_obstacle.get_node("CollisionShape2D").disabled = true
 			enemy_obstacle.hide()
+			enemy_area.hide()
 		1:
 			enemy_powerup_text.modulate = Color.ORANGE
 			enemy_powerup_text.text = str(Autoload.enemy_powerup_timer/60) + " Tall Paddle"
 			enemy_obstacle.get_node("CollisionShape2D").disabled = true
 			enemy_obstacle.hide()
+			enemy_area.hide()
 		2:
 			enemy_powerup_text.modulate = Color.CYAN
 			enemy_powerup_text.text = str(Autoload.enemy_powerup_timer/60) + " Speed Boost"
 			enemy_obstacle.get_node("CollisionShape2D").disabled = true
 			enemy_obstacle.hide()
+			enemy_area.hide()
 		3:
 			enemy_powerup_text.modulate = Color.GREEN
 			enemy_powerup_text.text = str(Autoload.enemy_powerup_timer/60) + " Obstacle"
 			enemy_obstacle.get_node("CollisionShape2D").disabled = false
 			enemy_obstacle.get_node("Sprite2D").modulate = Autoload.enemy_color
 			enemy_obstacle.show()
+			enemy_area.hide()
+		4:
+			enemy_powerup_text.modulate = Color.BLUE
+			enemy_powerup_text.text = str(Autoload.enemy_powerup_timer/60) + " Fastball"
+			enemy_obstacle.get_node("CollisionShape2D").disabled = true
+			enemy_obstacle.hide()
+			enemy_area.hide()
+		5:
+			enemy_powerup_text.modulate = Color.DARK_GREEN
+			enemy_powerup_text.text = str(Autoload.enemy_powerup_timer/60) + " Gravity"
+			enemy_obstacle.get_node("CollisionShape2D").disabled = true
+			enemy_obstacle.hide()
+			enemy_area.hide()
+		6:
+			enemy_powerup_text.modulate = Color.YELLOW
+			enemy_powerup_text.text = str(Autoload.enemy_powerup_timer/60) + " Vert Boost"
+			enemy_obstacle.get_node("CollisionShape2D").disabled = true
+			enemy_obstacle.hide()
+			enemy_area.hide()
+		7:
+			enemy_powerup_text.modulate = Color.PURPLE
+			enemy_powerup_text.text = str(Autoload.enemy_powerup_timer/60) + " RC Ball"
+			enemy_obstacle.get_node("CollisionShape2D").disabled = true
+			enemy_obstacle.hide()
+			enemy_area.hide()
+		8:
+			enemy_powerup_text.modulate = Color.MEDIUM_SPRING_GREEN
+			enemy_powerup_text.text = str(Autoload.enemy_powerup_timer/60) + " Chrono Field"
+			enemy_obstacle.get_node("CollisionShape2D").disabled = true
+			enemy_obstacle.hide()
+			enemy_area.show()
 		
 func _physics_process(delta):
 	pause_timer -= 1
